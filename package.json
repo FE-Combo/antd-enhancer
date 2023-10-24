@@ -1,7 +1,7 @@
 {
   "name": "antd-enhancer",
   "version": "0.0.2",
-  "description": "A react library developed with antd",
+  "description": "A react library developed with antd.",
   "license": "MIT",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -78,11 +78,5 @@
     "antd": ">5.0.0",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "authors": [
-    "wone<605131105@qq.com>"
-  ]
+  }
 }
