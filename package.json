@@ -2,29 +2,32 @@
   "name": "antd-enhancer",
   "version": "0.0.1",
   "description": "A react library developed with antd",
+  "license": "MIT",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "lib",
+    "es"
+  ],
   "scripts": {
-    "start": "npm run dev",
-    "dev": "dumi dev",
     "build": "father build",
     "build:watch": "father dev",
+    "dev": "dumi dev",
     "docs:build": "dumi build",
-    "prepare": "husky install && dumi setup",
     "doctor": "father doctor",
     "lint": "npm run lint:es && npm run lint:css",
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
-    "prepublishOnly": "father doctor && npm run build"
+    "prepare": "husky install && dumi setup",
+    "prepublishOnly": "father doctor && npm run build",
+    "release": "standard-version",
+    "release:alpha": "standard-version --prerelease alpha",
+    "release:beta": "standard-version --prerelease beta",
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "start": "npm run dev"
   },
-  "authors": [
-    "wone<605131105@qq.com>"
-  ],
-  "license": "MIT",
-  "files": [
-    "lib",
-    "es"
-],
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -47,13 +50,8 @@
       "prettier --parser=typescript --write"
     ]
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "peerDependencies": {
-    "antd": ">5.0.0",
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+  "dependencies": {
+    "react-no-ssr": "^1.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
@@ -73,9 +71,18 @@
     "prettier-plugin-packagejson": "^2.2.18",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "standard-version": "^9.5.0",
     "stylelint": "^14.9.1"
   },
-  "dependencies": {
-    "react-no-ssr": "^1.1.0"
-  }
+  "peerDependencies": {
+    "antd": ">5.0.0",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "wone<605131105@qq.com>"
+  ]
 }
