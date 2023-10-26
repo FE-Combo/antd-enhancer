@@ -1,15 +1,22 @@
-import React, { useMemo, useEffect, forwardRef, Ref, ForwardedRef, useRef } from 'react';
-import { Table, Typography, theme } from 'antd';
-import { TableProps } from 'antd/lib/table';
-import {AnyObject} from "antd/lib/_util/type";
-import genDefaultStyle from './jss';
-import { ColumnsType } from "antd/lib/table/interface";
-import classNames from 'classnames';
 import { useStyleRegister } from '@ant-design/cssinjs';
+import { Table, Typography, theme } from 'antd';
+import { AnyObject } from 'antd/lib/_util/type';
+import { TableProps } from 'antd/lib/table';
+import { ColumnsType } from 'antd/lib/table/interface';
+import classNames from 'classnames';
+import React, {
+  ForwardedRef,
+  Ref,
+  forwardRef,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-interface Props<T extends AnyObject = AnyObject> extends TableProps<T> {
+export interface Props<T extends AnyObject = AnyObject> extends TableProps<T> {
   defaultData?: string;
 }
 
@@ -19,7 +26,10 @@ export type RefInternalTable = <RecordType extends AnyObject = AnyObject>(
   },
 ) => React.ReactElement;
 
-const InternalTable = <T extends AnyObject = AnyObject>(props:Props<T>, ref: ForwardedRef<HTMLDivElement>) => {
+const InternalTable = <T extends AnyObject = AnyObject>(
+  props: Props<T>,
+  ref: ForwardedRef<HTMLDivElement>,
+) => {
   const prefixCls = 'antd-enhancer-table';
   const countRef = useRef(0);
   const { theme, token, hashId } = useToken();
@@ -41,21 +51,23 @@ const InternalTable = <T extends AnyObject = AnyObject>(props:Props<T>, ref: For
   // 缺省dataIndex、render
   const nextColumns = useMemo(
     () =>
-      columns.map(_ => {
+      columns.map((_) => {
         const item = { dataIndex: _?.key, ..._ } as ColumnsType<T>[number];
         if (item.render) {
           const render = item.render;
           item.render = (value, record, index) =>
             render(value, record, index) || defaultData;
         } else {
-          item.render = value => {
-            const nextValue = JSON.stringify(value)
-            return typeof value === "bigint"?  value.toString() : (
+          item.render = (value) => {
+            const nextValue = JSON.stringify(value);
+            return typeof value === 'bigint' ? (
+              value.toString()
+            ) : (
               <Typography.Text ellipsis={{ tooltip: nextValue }}>
                 {nextValue || defaultData}
               </Typography.Text>
-            )
-          }
+            );
+          };
         }
         return item;
       }),
@@ -95,15 +107,18 @@ const InternalTable = <T extends AnyObject = AnyObject>(props:Props<T>, ref: For
       columns={nextColumns}
       pagination={pagination}
       {...restProps}
-    />
+    />,
   );
-}
+};
 
 const ForwardInternalTable = forwardRef(InternalTable) as RefInternalTable;
 
-function ExternalTable<T extends AnyObject = AnyObject>(props: Props<T>, ref: Ref<HTMLDivElement>) {
+function ExternalTable<T extends AnyObject = AnyObject>(
+  props: Props<T>,
+  ref: Ref<HTMLDivElement>,
+) {
   return <ForwardInternalTable<T> {...props} ref={ref} />;
-} 
+}
 
 const ForwardExternalTable = forwardRef(ExternalTable);
 

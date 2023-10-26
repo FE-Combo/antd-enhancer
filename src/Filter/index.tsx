@@ -1,24 +1,27 @@
-import React, {
-  ReactNode,
-  CSSProperties,
-  useState,
-  useMemo,
-  useContext
-} from 'react';
-import { Form, Button, Space, theme, Typography } from 'antd';
-import { Callbacks, FormInstance } from 'rc-field-form/lib/interface';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import genDefaultStyle from './jss';
-import classNames from 'classnames';
 import { useStyleRegister } from '@ant-design/cssinjs';
-import { EnhancedConfigContext, ConfigConsumerProps } from "../ConfigProvider"
-import defaultLocale from "../ConfigProvider/locales/en";
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Button, Form, Space, Typography, theme } from 'antd';
+import classNames from 'classnames';
+import { Callbacks, FormInstance } from 'rc-field-form/lib/interface';
+import React, {
+  CSSProperties,
+  ForwardedRef,
+  ReactNode,
+  Ref,
+  forwardRef,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
+import { ConfigConsumerProps, EnhancedConfigContext } from '../ConfigProvider';
+import defaultLocale from '../ConfigProvider/locales/en';
+import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
 const MAX_LENGTH = 4;
 
-interface Props {
+export interface Props {
   onSearch?: Callbacks['onFinish'];
   onReset?: () => void;
   children?: ReactNode;
@@ -27,9 +30,17 @@ interface Props {
   form?: FormInstance<any>;
 }
 
-function Index(props: Props) {
+export type RefInternalFilter = (
+  props: React.PropsWithChildren<Props> & {
+    ref?: React.Ref<HTMLDivElement>;
+  },
+) => React.ReactElement;
+
+function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
   const prefixCls = 'antd-enhancer-filter';
-  const {locale = defaultLocale} = useContext<ConfigConsumerProps>(EnhancedConfigContext);
+  const { locale = defaultLocale } = useContext<ConfigConsumerProps>(
+    EnhancedConfigContext,
+  );
   const { theme, token, hashId } = useToken();
 
   // 全局注册，内部会做缓存优化
@@ -38,15 +49,22 @@ function Index(props: Props) {
     () => [genDefaultStyle(prefixCls, token)],
   );
 
-  const { onSearch, onReset, children, style, className, form: preForm } = props;
+  const {
+    onSearch,
+    onReset,
+    children,
+    style,
+    className,
+    form: preForm,
+  } = props;
   const [expand, setExpand] = useState(false);
   const nextChidren = useMemo(
-    () => (children instanceof Array ? children.filter(_ => _) : children),
+    () => (children instanceof Array ? children.filter((_) => _) : children),
     [children],
   );
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const [form] = Form.useForm(preForm as any);
-  
+
   // Form尾部需要补充个数
   const numberOfSupplements =
     MAX_LENGTH - ((React.Children.count(nextChidren) + 1) % MAX_LENGTH);
@@ -63,13 +81,21 @@ function Index(props: Props) {
   };
 
   return wrapSSR(
-    <div className={classNames(prefixCls, hashId, className)} style={style}>
+    <div
+      ref={ref}
+      className={classNames(prefixCls, hashId, className)}
+      style={style}
+    >
       <Form form={form} layout="inline" onFinish={handleFinish}>
         {React.Children.map(nextChidren, (_, index) => {
-          const formItemProps = _.props["data-form-item-props"] || {};
+          const formItemProps = _.props['data-form-item-props'] || {};
           const count = expand ? React.Children.count(nextChidren) : 3;
           if (index < count) {
-            return <Form.Item key={index} {...formItemProps}>{_}</Form.Item>;
+            return (
+              <Form.Item key={index} {...formItemProps}>
+                {_}
+              </Form.Item>
+            );
           }
         })}
         <div className={classNames(prefixCls + '-button-wrapper', hashId)}>
@@ -108,4 +134,14 @@ function Index(props: Props) {
   );
 }
 
-export default Index;
+const ForwardInternalFilter = forwardRef(InternalFilter) as RefInternalFilter;
+
+function ExternalFilter(props: Props, ref: Ref<HTMLDivElement>) {
+  return <ForwardInternalFilter {...props} ref={ref} />;
+}
+
+const ForwardExternalFilter = forwardRef(ExternalFilter);
+
+ForwardExternalFilter.displayName = 'Filter';
+
+export default ForwardExternalFilter;

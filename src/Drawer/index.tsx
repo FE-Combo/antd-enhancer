@@ -1,18 +1,18 @@
-import React, { FC } from 'react';
-import { Drawer, DrawerProps, Spin, theme } from 'antd';
 import { useStyleRegister } from '@ant-design/cssinjs';
-import genDefaultStyle from "./jss"
+import { Drawer, DrawerProps, Spin, theme } from 'antd';
 import classNames from 'classnames';
+import React, { FC } from 'react';
+import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-interface Props extends DrawerProps {
+export interface Props extends DrawerProps {
   loading?: boolean;
   onOk?: () => void;
   confirmLoading?: boolean;
 }
 
-const Index: FC<Props> = props => {
+const Index: FC<Props> = (props) => {
   const prefixCls = 'antd-enhanced-drawer';
   const { theme, token, hashId } = useToken();
 
@@ -22,21 +22,16 @@ const Index: FC<Props> = props => {
     () => [genDefaultStyle(prefixCls)],
   );
 
-  const {
-    rootClassName = '',
-    loading = false,
-    children,
-    ...restProps
-  } = props;
+  const { rootClassName = '', loading = false, children, ...restProps } = props;
 
   return wrapSSR(
-        <Drawer
-          rootClassName={classNames(prefixCls, rootClassName, hashId)}
-          {...restProps}
-        >
-          <Spin spinning={loading}>{children}</Spin>
-        </Drawer>,
-    )
+    <Drawer
+      rootClassName={classNames(prefixCls, rootClassName, hashId)}
+      {...restProps}
+    >
+      <Spin spinning={loading}>{children}</Spin>
+    </Drawer>,
+  );
 };
 
 export default Index;
