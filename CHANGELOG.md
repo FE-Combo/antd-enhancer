@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/FE-Combo/antd-enhancer/compare/v0.0.4...v0.0.5) (2023-10-26)
+
+### Bug Fixes
+
+- cell commpoent type ([0efb234](https://github.com/FE-Combo/antd-enhancer/commit/0efb2342dc64da23c0b89851c80fa2bf0d3a35d0))
+
 ### [0.0.4](https://github.com/FE-Combo/antd-enhancer/compare/v0.0.3...v0.0.4) (2023-10-26)
 
 ### Features
