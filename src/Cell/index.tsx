@@ -29,22 +29,26 @@ import {
 
 const { useToken } = theme;
 
+type BaseColorTypeUnion = keyof typeof BaseColorType;
+
 export interface Props extends HTMLAttributes<HTMLDivElement> {
-  display: 'inline' | 'block' | 'inline-block';
-  colorType?: BaseColorType | ColorType;
-  hoverColorType?: BaseColorType | HoverColorType;
-  activeColorType?: BaseColorType | ActiveColorType;
-  fillType?: BaseColorType | FillType;
-  hoverFillType?: BaseColorType | HoverFillType;
-  borderColorType?: BaseColorType | BorderColorType;
-  hoverBorderColorType?: BaseColorType | HoverBorderColorType;
-  activeBorderColorType?: BaseColorType | ActiveBorderColorType;
-  fontSizeType?: FontSizeType;
-  lineHeightType?: LineHeightType;
-  marginType?: MarginType;
-  paddingType?: PaddingType;
-  borderRadiusType?: BorderRadiusType;
-  boxShadowType?: BoxShadowType;
+  display?: 'inline' | 'block' | 'inline-block';
+  colorType?: keyof typeof ColorType | BaseColorTypeUnion;
+  hoverColorType?: keyof typeof HoverColorType | BaseColorTypeUnion;
+  activeColorType?: keyof typeof ActiveColorType | BaseColorTypeUnion;
+  fillType?: keyof typeof FillType | BaseColorTypeUnion;
+  hoverFillType?: keyof typeof HoverFillType | BaseColorTypeUnion;
+  borderColorType?: keyof typeof BorderColorType | BaseColorTypeUnion;
+  hoverBorderColorType?: keyof typeof HoverBorderColorType | BaseColorTypeUnion;
+  activeBorderColorType?:
+    | keyof typeof ActiveBorderColorType
+    | BaseColorTypeUnion;
+  fontSizeType?: keyof typeof FontSizeType;
+  lineHeightType?: keyof typeof LineHeightType;
+  marginType?: keyof typeof MarginType;
+  paddingType?: keyof typeof PaddingType;
+  borderRadiusType?: keyof typeof BorderRadiusType;
+  boxShadowType?: keyof typeof BoxShadowType;
 }
 
 export type RefInternalCell = (
@@ -77,7 +81,7 @@ function InternalCell(
     children,
     ...restProps
   } = props;
-  const prefixCls = 'antd-enhancer-theme-text';
+  const prefixCls = 'antd-enhancer-cell';
   const { theme, token, hashId } = useToken();
 
   // 全局注册，内部会做缓存优化

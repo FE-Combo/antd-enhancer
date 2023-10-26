@@ -1,4 +1,21 @@
 export type { Props as CellProps } from './Cell';
+export {
+  ActiveBorderColorType as CellActiveBorderColorType,
+  ActiveColorType as CellActiveColorType,
+  BaseColorType as CellBaseColorType,
+  BorderColorType as CellBorderColorType,
+  BorderRadiusType as CellBorderRadiusType,
+  BoxShadowType as CellBoxShadowType,
+  ColorType as CellColorType,
+  FillType as CellFillType,
+  FontSizeType as CellFontSizeType,
+  HoverBorderColorType as CellHoverBorderColorType,
+  HoverColorType as CellHoverColorType,
+  HoverFillType as CellHoverFillType,
+  LineHeightType as CellLineHeightType,
+  MarginType as CellMarginType,
+  PaddingType as CellPaddingType,
+} from './Cell/type';
 export type { Props as ConfigProviderProps } from './ConfigProvider';
 export type { Props as DrawerProps } from './Drawer';
 export type { Props as FilterProps } from './Filter';
