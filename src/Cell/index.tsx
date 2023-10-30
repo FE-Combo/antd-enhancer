@@ -33,6 +33,7 @@ type BaseColorTypeUnion = keyof typeof BaseColorType;
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   display?: 'inline' | 'block' | 'inline-block';
+  fontWeight?: 'bold';
   colorType?: keyof typeof ColorType | BaseColorTypeUnion;
   hoverColorType?: keyof typeof HoverColorType | BaseColorTypeUnion;
   activeColorType?: keyof typeof ActiveColorType | BaseColorTypeUnion;
@@ -46,7 +47,15 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   fontSizeType?: keyof typeof FontSizeType;
   lineHeightType?: keyof typeof LineHeightType;
   marginType?: keyof typeof MarginType;
+  marginTopType?: keyof typeof MarginType;
+  marginRightType?: keyof typeof MarginType;
+  marginBottomType?: keyof typeof MarginType;
+  marginLeftType?: keyof typeof MarginType;
   paddingType?: keyof typeof PaddingType;
+  paddingTopType?: keyof typeof PaddingType;
+  paddingRightType?: keyof typeof PaddingType;
+  paddingBottomType?: keyof typeof PaddingType;
+  paddingLeftType?: keyof typeof PaddingType;
   borderRadiusType?: keyof typeof BorderRadiusType;
   boxShadowType?: keyof typeof BoxShadowType;
 }
@@ -66,13 +75,22 @@ function InternalCell(
     display = 'inline-block',
     colorType = 'colorText',
     fontSizeType = 'fontSize',
+    fontWeight,
     hoverColorType,
     activeColorType,
     lineHeightType,
     fillType,
     hoverFillType,
     marginType,
+    marginTopType,
+    marginRightType,
+    marginBottomType,
+    marginLeftType,
     paddingType,
+    paddingTopType,
+    paddingRightType,
+    paddingBottomType,
+    paddingLeftType,
     borderRadiusType,
     boxShadowType,
     borderColorType,
@@ -100,14 +118,25 @@ function InternalCell(
     fontSizeType && `${prefixCls}-fontSize-${fontSizeType}`,
     lineHeightType && `${prefixCls}-lineHeight-${lineHeightType}`,
     marginType && `${prefixCls}-margin-${marginType}`,
+    marginTopType && `${prefixCls}-marginTop-${marginTopType}`,
+    marginRightType && `${prefixCls}-marginRight-${marginRightType}`,
+    marginBottomType && `${prefixCls}-marginBottom-${marginBottomType}`,
+    marginLeftType && `${prefixCls}-marginLeft-${marginLeftType}`,
     paddingType && `${prefixCls}-padding-${paddingType}`,
+    paddingTopType && `${prefixCls}-paddingTop-${paddingTopType}`,
+    paddingRightType && `${prefixCls}-paddingRight-${paddingRightType}`,
+    paddingBottomType && `${prefixCls}-paddingBottom-${paddingBottomType}`,
+    paddingLeftType && `${prefixCls}-paddingLeft-${paddingLeftType}`,
     borderRadiusType && `${prefixCls}-borderRadius-${borderRadiusType}`,
     boxShadowType && `${prefixCls}-boxShadow-${boxShadowType}`,
     borderColorType && `${prefixCls}-borderColor-${borderColorType}`,
+    borderColorType && `${prefixCls}-borderWidth-lineWidth`,
+    borderColorType && `${prefixCls}-borderStyle-solid`,
     hoverBorderColorType &&
       `${prefixCls}-borderColor-hover-${hoverBorderColorType}`,
     activeBorderColorType &&
       `${prefixCls}-borderColor-active-${activeBorderColorType}`,
+    fontWeight && `${prefixCls}-fontWeight-${fontWeight}`,
   ].filter((_) => _);
 
   return wrapSSR(

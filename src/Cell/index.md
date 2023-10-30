@@ -11,9 +11,7 @@ group:
 
 主题色原子组件
 
-antd 现有问题：https://github.com/ant-design/ant-design/discussions/45412
-
-功能包含：字体颜色、填充颜色、字体大小、行高度、外边距、内边距、圆角大小、阴影、边框颜色、边框
+功能包含：字体颜色、填充颜色、字体大小、行高度、外边距、内边距、圆角大小、阴影、边框颜色、边框、字体粗细
 
 # 代码示例
 
@@ -58,6 +56,7 @@ export default () => {
       <Divider plain />
       <Cell
         fontSizeType="fontSizeHeading1"
+        fontWeight="bold"
         colorType="colorPrimary"
         fillType="colorFill"
         hoverFillType="colorPrimaryBgHover"
@@ -67,7 +66,7 @@ export default () => {
         borderColorType="colorPrimary"
         hoverBorderColorType="colorPrimaryHover"
         activeBorderColorType="colorWarningActive"
-        style={{ borderWidth: '1px', borderStyle: 'solid' }}
+        marginType="marginXS"
       >
         Cell
       </Cell>
@@ -90,7 +89,25 @@ export default () => {
 | hoverBorderColorType  | 边框 hover 颜色  | `BaseColorType \| HoverBorderColorType`  |                |
 | activeBorderColorType | 边框 active 颜色 | `BaseColorType \| ActiveBorderColorType` |                |
 | fontSizeType          | 文本大小         | `FontSizeType`                           | `fontSize`     |
+| lineHeightType        | 行高             | `LineHeightType`                         |                |
+| fontWeightType        | 文本粗细         | `bold`                                   |                |
 | borderRadiusType      | 圆角             | `BorderRadiusType`                       |                |
 | paddingType           | 内边距           | `PaddingType`                            |                |
+| paddingTopType        | 上内边距         | `PaddingType`                            |                |
+| paddingRightType      | 右内边距         | `PaddingType`                            |                |
+| paddingBottomType     | 下内边距         | `PaddingType`                            |                |
+| paddingLeftType       | 左内边距         | `PaddingType`                            |                |
 | marginType            | 外边距           | `MarginType`                             |                |
+| marginTopType         | 上外边距         | `MarginType`                             |                |
+| marginRightType       | 右外边距         | `MarginType`                             |                |
+| marginBottomType      | 下外边距         | `MarginType`                             |                |
+| marginLeftType        | 左外边距         | `MarginType`                             |                |
 | boxShadowType         | 阴影             | `BoxShadowType`                          |                |
+
+antd 现有问题：https://github.com/ant-design/ant-design/discussions/45412
+
+主题色拓展：https://ant-design.antgroup.com/docs/blog/config-provider-style-cn
+
+组件 props 无法影响组件样式原因：https://ant-design.antgroup.com/docs/blog/css-in-js-cn
+
+props 改变样式方案：https://emotion.sh/docs/@emotion/css

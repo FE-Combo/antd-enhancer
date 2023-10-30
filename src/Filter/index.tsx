@@ -1,6 +1,6 @@
 import { useStyleRegister } from '@ant-design/cssinjs';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { Button, Form, Space, Typography, theme } from 'antd';
+import { Button, ButtonProps, Form, Space, Typography, theme } from 'antd';
 import classNames from 'classnames';
 import { Callbacks, FormInstance } from 'rc-field-form/lib/interface';
 import React, {
@@ -19,8 +19,6 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-const MAX_LENGTH = 4;
-
 export interface Props {
   onSearch?: Callbacks['onFinish'];
   onReset?: () => void;
@@ -28,6 +26,9 @@ export interface Props {
   style?: CSSProperties;
   className?: string;
   form?: FormInstance<any>;
+  searchProps?: ButtonProps;
+  resetProps?: ButtonProps;
+  maxCount?: number;
 }
 
 export type RefInternalFilter = (
@@ -55,6 +56,9 @@ function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
     children,
     style,
     className,
+    searchProps,
+    resetProps,
+    maxCount = 4,
     form: preForm,
   } = props;
   const [expand, setExpand] = useState(false);
@@ -67,7 +71,7 @@ function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
 
   // Form尾部需要补充个数
   const numberOfSupplements =
-    MAX_LENGTH - ((React.Children.count(nextChidren) + 1) % MAX_LENGTH);
+    maxCount - ((React.Children.count(nextChidren) + 1) % maxCount);
 
   const handleReset = () => {
     form.resetFields();
@@ -89,25 +93,42 @@ function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
       <Form form={form} layout="inline" onFinish={handleFinish}>
         {React.Children.map(nextChidren, (_, index) => {
           const formItemProps = _.props['data-form-item-props'] || {};
-          const count = expand ? React.Children.count(nextChidren) : 3;
+          const count = expand
+            ? React.Children.count(nextChidren)
+            : maxCount - 1;
           if (index < count) {
             return (
-              <Form.Item key={index} {...formItemProps}>
+              <Form.Item
+                key={index}
+                {...formItemProps}
+                style={{
+                  width: `${(1 / maxCount) * 100}%`,
+                  paddingRight:
+                    (index + 1) % maxCount === 0 ? 0 : token.padding,
+                }}
+              >
                 {_}
               </Form.Item>
             );
           }
         })}
-        <div className={classNames(prefixCls + '-button-wrapper', hashId)}>
+        <div
+          className={classNames(prefixCls + '-button-wrapper', hashId)}
+          style={{ width: `${(1 / maxCount) * 100}%` }}
+        >
           <Space>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" {...searchProps}>
               {locale.filter.search}
             </Button>
-            <Button onClick={handleReset}>{locale.filter.reset}</Button>
+            <Button onClick={handleReset} {...resetProps}>
+              {locale.filter.reset}
+            </Button>
             <Typography.Link
               style={{
                 display:
-                  React.Children.count(nextChidren) <= 3 ? 'none' : 'inline',
+                  React.Children.count(nextChidren) <= maxCount - 1
+                    ? 'none'
+                    : 'inline',
               }}
               onClick={() => setExpand(!expand)}
             >
@@ -126,6 +147,7 @@ function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
         {new Array(numberOfSupplements).fill(null).map((_, index) => (
           <div
             className={classNames(prefixCls + '-empty-item', hashId)}
+            style={{ width: `${(1 / maxCount) * 100}%` }}
             key={index}
           />
         ))}

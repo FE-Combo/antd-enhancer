@@ -147,9 +147,65 @@ const genDefaultStyle = (
     token,
   );
 
+  const marginTop = genericStyles(
+    prefixCls,
+    'marginTop',
+    Object.keys(MarginType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const marginRight = genericStyles(
+    prefixCls,
+    'marginRight',
+    Object.keys(MarginType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const marginBottom = genericStyles(
+    prefixCls,
+    'marginBottom',
+    Object.keys(MarginType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const marginLeft = genericStyles(
+    prefixCls,
+    'marginLeft',
+    Object.keys(MarginType) as KeyOfAliasToken[],
+    token,
+  );
+
   const paddings = genericStyles(
     prefixCls,
     'padding',
+    Object.keys(PaddingType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const paddingTop = genericStyles(
+    prefixCls,
+    'paddingTop',
+    Object.keys(PaddingType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const paddingRight = genericStyles(
+    prefixCls,
+    'paddingRight',
+    Object.keys(PaddingType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const paddingBottom = genericStyles(
+    prefixCls,
+    'paddingBottom',
+    Object.keys(PaddingType) as KeyOfAliasToken[],
+    token,
+  );
+
+  const paddingLeft = genericStyles(
+    prefixCls,
+    'paddingLeft',
     Object.keys(PaddingType) as KeyOfAliasToken[],
     token,
   );
@@ -198,7 +254,7 @@ const genDefaultStyle = (
   return [
     {
       [`.${prefixCls}`]: {
-        //
+        fontFamily: token.fontFamily,
       },
     },
     {
@@ -216,6 +272,21 @@ const genDefaultStyle = (
         display: 'block',
       },
     },
+    {
+      [`.${prefixCls}-borderWidth-lineWidth`]: {
+        borderWidth: token.lineWidth,
+      },
+    },
+    {
+      [`.${prefixCls}-borderStyle-solid`]: {
+        borderStyle: token.lineType,
+      },
+    },
+    {
+      [`.${prefixCls}-fontWeight-bold`]: {
+        fontWeight: token.fontWeightStrong,
+      },
+    },
     colors,
     hoverColors,
     activeColors,
@@ -224,7 +295,15 @@ const genDefaultStyle = (
     fontSizes,
     lineHeights,
     margins,
+    marginTop,
+    marginRight,
+    marginBottom,
+    marginLeft,
     paddings,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
     borderRadiuses,
     boxShadows,
     borderColors,

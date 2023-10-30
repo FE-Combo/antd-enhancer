@@ -45,6 +45,7 @@ const InternalTable = <T extends AnyObject = AnyObject>(
     pagination,
     defaultData,
     className,
+    children,
     ...restProps
   } = props;
 
@@ -59,14 +60,20 @@ const InternalTable = <T extends AnyObject = AnyObject>(
             render(value, record, index) || defaultData;
         } else {
           item.render = (value) => {
-            const nextValue = JSON.stringify(value);
-            return typeof value === 'bigint' ? (
-              value.toString()
-            ) : (
-              <Typography.Text ellipsis={{ tooltip: nextValue }}>
-                {nextValue || defaultData}
-              </Typography.Text>
-            );
+            if (value) {
+              if (typeof value === 'bigint') {
+                return value.toString();
+              } else {
+                const nextValue = JSON.stringify(value);
+                return (
+                  <Typography.Text ellipsis={{ tooltip: nextValue }}>
+                    {nextValue}
+                  </Typography.Text>
+                );
+              }
+            } else {
+              return defaultData;
+            }
           };
         }
         return item;
@@ -107,7 +114,9 @@ const InternalTable = <T extends AnyObject = AnyObject>(
       columns={nextColumns}
       pagination={pagination}
       {...restProps}
-    />,
+    >
+      {children}
+    </Table>,
   );
 };
 

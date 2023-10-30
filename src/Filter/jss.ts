@@ -1,5 +1,5 @@
-import { GlobalToken } from 'antd';
 import { CSSInterpolation } from '@ant-design/cssinjs';
+import { GlobalToken } from 'antd';
 
 const genDefaultStyle = (
   prefixCls: string,
@@ -14,9 +14,7 @@ const genDefaultStyle = (
         justifyContent: 'space-between',
 
         '& .ant-form-item': {
-          width: '25%',
-          paddingRight: token.padding,
-          margin: '0',
+          margin: `0 0 ${token.margin}px 0`,
           display: 'flex',
           flexDirection: 'column',
 
@@ -28,23 +26,21 @@ const genDefaultStyle = (
 
             '& .ant-form-item-label': {
               textAlign: 'left',
-            }
-          },
-
-          '&:nth-child(4n)': {
-            paddingRight: '0',
+            },
           },
         },
         [`& .${prefixCls}-empty-item`]: {
-          width: '25%',
           marginBottom: '0',
         },
 
         [`& .${prefixCls}-button-wrapper`]: {
-          width: '25%',
-
+          marginBottom: `${token.margin}px`,
           [`& .${prefixCls}-button-wrapper-sider`]: {
             color: token.colorText,
+
+            '& .ant-space-item': {
+              textWrap: 'nowrap',
+            },
 
             '&:hover': {
               color: token.colorPrimary,
