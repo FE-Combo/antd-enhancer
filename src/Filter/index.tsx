@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { Callbacks, FormInstance } from 'rc-field-form/lib/interface';
 import React, {
   CSSProperties,
-  ForwardedRef,
   ReactNode,
   Ref,
   forwardRef,
@@ -26,18 +25,21 @@ export interface Props {
   style?: CSSProperties;
   className?: string;
   form?: FormInstance<any>;
+  searchText?: ReactNode;
   searchProps?: ButtonProps;
+  resetText?: ReactNode;
   resetProps?: ButtonProps;
   maxCount?: number;
+  fixed?: boolean;
 }
 
 export type RefInternalFilter = (
   props: React.PropsWithChildren<Props> & {
-    ref?: React.Ref<HTMLDivElement>;
+    ref?: React.Ref<FormInstance>;
   },
 ) => React.ReactElement;
 
-function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
+function InternalFilter(props: Props, ref: Ref<FormInstance>) {
   const prefixCls = 'antd-enhancer-filter';
   const { locale = defaultLocale } = useContext<ConfigConsumerProps>(
     EnhancedConfigContext,
@@ -60,6 +62,9 @@ function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
     resetProps,
     maxCount = 4,
     form: preForm,
+    searchText,
+    resetText,
+    fixed = true,
   } = props;
   const [expand, setExpand] = useState(false);
   const nextChidren = useMemo(
@@ -79,86 +84,111 @@ function InternalFilter(props: Props, ref: ForwardedRef<HTMLDivElement>) {
   };
 
   const handleFinish = () => {
-    // form.getFieldsValue(): 只获取真实存在的dom节点值
-    // form.getFieldsValue(true): form中有值，包括隐藏的dom节点
+    // form.getFieldsValue(): 只能获取真实存在的dom节点值; form.getFieldsValue(true): 可以获取包括隐藏的dom节点
     onSearch?.(form.getFieldsValue(true));
   };
 
   return wrapSSR(
-    <div
-      ref={ref}
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    <Form
+      ref={ref as any}
       className={classNames(prefixCls, hashId, className)}
-      style={style}
+      style={{ justifyContent: fixed ? 'space-between' : undefined, ...style }}
+      form={form}
+      layout="inline"
+      onFinish={handleFinish}
     >
-      <Form form={form} layout="inline" onFinish={handleFinish}>
-        {React.Children.map(nextChidren, (_, index) => {
-          const formItemProps = _.props['data-form-item-props'] || {};
-          const count = expand
-            ? React.Children.count(nextChidren)
-            : maxCount - 1;
-          if (index < count) {
-            return (
-              <Form.Item
-                key={index}
-                {...formItemProps}
-                style={{
-                  width: `${(1 / maxCount) * 100}%`,
-                  paddingRight:
-                    (index + 1) % maxCount === 0 ? 0 : token.padding,
-                }}
-              >
-                {_}
-              </Form.Item>
-            );
-          }
-        })}
-        <div
-          className={classNames(prefixCls + '-button-wrapper', hashId)}
-          style={{ width: `${(1 / maxCount) * 100}%` }}
-        >
-          <Space>
-            <Button type="primary" htmlType="submit" {...searchProps}>
-              {locale.filter.search}
-            </Button>
-            <Button onClick={handleReset} {...resetProps}>
-              {locale.filter.reset}
-            </Button>
-            <Typography.Link
+      {React.Children.map(nextChidren, (_, index) => {
+        const formItemProps = _.props['data-form-item-props'] || {};
+        const count = expand ? React.Children.count(nextChidren) : maxCount - 1;
+        if (index < count) {
+          return (
+            <Form.Item
+              key={index}
+              {...formItemProps}
               style={{
-                display:
-                  React.Children.count(nextChidren) <= maxCount - 1
-                    ? 'none'
-                    : 'inline',
+                width: fixed ? `${(1 / maxCount) * 100}%` : undefined,
+                paddingRight: fixed
+                  ? (index + 1) % maxCount === 0
+                    ? 0
+                    : token.padding
+                  : token.padding,
               }}
-              onClick={() => setExpand(!expand)}
             >
-              <Space
-                className={classNames(
-                  prefixCls + '-button-wrapper-sider',
-                  hashId,
-                )}
-              >
-                {expand ? locale.filter.collapse : locale.filter.expand}
-                {expand ? <UpOutlined /> : <DownOutlined />}
-              </Space>
-            </Typography.Link>
-          </Space>
-        </div>
-        {new Array(numberOfSupplements).fill(null).map((_, index) => (
-          <div
-            className={classNames(prefixCls + '-empty-item', hashId)}
-            style={{ width: `${(1 / maxCount) * 100}%` }}
-            key={index}
-          />
-        ))}
-      </Form>
-    </div>,
+              {_}
+            </Form.Item>
+          );
+        }
+      })}
+      <div
+        className={classNames(prefixCls + '-button-wrapper', hashId)}
+        style={{ width: fixed ? `${(1 / maxCount) * 100}%` : undefined }}
+      >
+        <Space>
+          <Button type="primary" htmlType="submit" {...searchProps}>
+            {searchText ?? locale.filter.search}
+          </Button>
+          <Button onClick={handleReset} {...resetProps}>
+            {resetText ?? locale.filter.reset}
+          </Button>
+          <Typography.Link
+            style={{
+              display:
+                React.Children.count(nextChidren) <= maxCount - 1
+                  ? 'none'
+                  : 'inline',
+            }}
+            onClick={() => setExpand(!expand)}
+          >
+            <Space
+              className={classNames(
+                prefixCls + '-button-wrapper-sider',
+                hashId,
+              )}
+            >
+              {expand ? (
+                <Typography.Text
+                  className={classNames(
+                    prefixCls + '-button-wrapper-sider-text',
+                    hashId,
+                  )}
+                >
+                  <Space>
+                    {locale.filter.collapse}
+                    <UpOutlined />
+                  </Space>
+                </Typography.Text>
+              ) : (
+                <Typography.Text
+                  className={classNames(
+                    prefixCls + '-button-wrapper-sider-text',
+                    hashId,
+                  )}
+                >
+                  <Space>
+                    {locale.filter.expand}
+                    <DownOutlined />
+                  </Space>
+                </Typography.Text>
+              )}
+            </Space>
+          </Typography.Link>
+        </Space>
+      </div>
+      {new Array(numberOfSupplements).fill(null).map((_, index) => (
+        <div
+          className={classNames(prefixCls + '-empty-item', hashId)}
+          style={{ width: fixed ? `${(1 / maxCount) * 100}%` : undefined }}
+          key={index}
+        />
+      ))}
+    </Form>,
   );
 }
 
 const ForwardInternalFilter = forwardRef(InternalFilter) as RefInternalFilter;
 
-function ExternalFilter(props: Props, ref: Ref<HTMLDivElement>) {
+function ExternalFilter(props: Props, ref: Ref<FormInstance>) {
   return <ForwardInternalFilter {...props} ref={ref} />;
 }
 

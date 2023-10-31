@@ -11,8 +11,6 @@ group:
 
 条件筛选框
 
-默认显示一行，超过一行自动隐藏
-
 # 代码示例
 
 ```jsx
@@ -56,16 +54,19 @@ export default () => {
 
 #### Filter
 
-| 参数        | 说明                     | 类型                                                                | 默认值 |
-| ----------- | ------------------------ | ------------------------------------------------------------------- | ------ |
-| maxCount    | 一行最多显示个数         | `number`                                                            | 4      |
-| searchProps | 搜索按钮属性             | `ButtonProps`                                                       | -      |
-| resetProps  | 重置按钮属性             | `ButtonProps`                                                       | -      |
-| onSearch    | 提交表单回调事件         | `function(values)`                                                  | -      |
-| onReset     | 重置表单回调事件         | `function()=>void`                                                  | -      |
-| style       | 样式                     | `CSSProperties`                                                     | -      |
-| className   | 类名                     | `string`                                                            | -      |
-| form        | 由外部传入 form 控制表单 | [FormInstance](https://ant.design/components/form-cn/#FormInstance) | -      |
+| 参数        | 说明                                           | 类型                                                                | 默认值               |
+| ----------- | ---------------------------------------------- | ------------------------------------------------------------------- | -------------------- |
+| maxCount    | 一行最多显示个数，超过一行自动隐藏             | `number`                                                            | 4                    |
+| searchText  | 搜索按钮文本                                   | `string`                                                            | en(Search)、zh(搜索) |
+| resetText   | 重置按钮文本                                   | `string`                                                            | en(Reset)、zh(重置)  |
+| searchProps | 搜索按钮属性                                   | `ButtonProps`                                                       | -                    |
+| resetProps  | 重置按钮属性                                   | `ButtonProps`                                                       | -                    |
+| onSearch    | 提交表单回调事件                               | `function(values)`                                                  | -                    |
+| onReset     | 重置表单回调事件                               | `function()=>void`                                                  | -                    |
+| style       | 样式                                           | `CSSProperties`                                                     | -                    |
+| className   | 类名                                           | `string`                                                            | -                    |
+| form        | 由外部传入 form 控制表单                       | [FormInstance](https://ant.design/components/form-cn/#FormInstance) | -                    |
+| fixed       | 内容宽度是否影响列的布局，值为 true 代表不影响 | `boolean`                                                           | true                 |
 
 #### children
 
