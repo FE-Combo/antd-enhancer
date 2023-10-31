@@ -8,8 +8,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 - actions component ([d45fec3](https://github.com/FE-Combo/antd-enhancer/commit/d45fec38506b3a74961765df4b917417d903544f))
 - add searchtext & resttext & fixed props in filter compoennt ([b0d0be1](https://github.com/FE-Combo/antd-enhancer/commit/b0d0be11b2251ccdd3da07346f8d487bf71329fb))
-- filter & ell ([440bdea](https://github.com/FE-Combo/antd-enhancer/commit/440bdea9ebbc6f2af7eb0fe099898e3219e2df53))
-- route menu compoent ([70e90bb](https://github.com/FE-Combo/antd-enhancer/commit/70e90bbc439e51ed2706d9d74ff64d7107cce7e2))
+- filter & cell ([440bdea](https://github.com/FE-Combo/antd-enhancer/commit/440bdea9ebbc6f2af7eb0fe099898e3219e2df53))
+- route menu component ([70e90bb](https://github.com/FE-Combo/antd-enhancer/commit/70e90bbc439e51ed2706d9d74ff64d7107cce7e2))
 
 ### [0.0.5](https://github.com/FE-Combo/antd-enhancer/compare/v0.0.4...v0.0.5) (2023-10-26)
 
