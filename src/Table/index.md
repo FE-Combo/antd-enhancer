@@ -8,6 +8,7 @@ nav:
 ---
 
 # Table
+
 - 优化
   - 设置 `rowKey` 默认值为 index
   - 刷新表单时，当前页为空数据自动回退上一页
@@ -16,6 +17,7 @@ nav:
   - 新增默认数据填充 `defaultData`
 
 # 代码示例
+
 ```jsx
 import { Table } from 'antd-enhancer';
 
@@ -139,17 +141,15 @@ export default () => {
     },
   ];
   return (
-      <div className="ka-component-table-test">
-        <Table columns={columns} dataSource={dataSource} />
-      </div>
+    <Table columns={columns} dataSource={dataSource} />
   );
 }
 ```
 
 # 基本参数
 
-| 参数  | 说明 | 类型     | 默认值 |
-| ----- | ---- | -------- | ------ |
-| defaultData | 默认数据填充| `string` | `""` |
+| 参数        | 说明         | 类型     | 默认值 |
+| ----------- | ------------ | -------- | ------ |
+| defaultData | 默认数据填充 | `string` | `""`   |
 
-[Table配置参考antd文档](https://ant-design.antgroup.com/components/table-cn#api)
+[Table 配置参考 antd 文档](https://ant-design.antgroup.com/components/table-cn#api)

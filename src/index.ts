@@ -1,3 +1,4 @@
+export type { Props as ActionsProps } from './Actions';
 export type { Props as CellProps } from './Cell';
 export {
   ActiveBorderColorType as CellActiveBorderColorType,
@@ -23,6 +24,7 @@ export type { Props as ModalProps } from './Modal';
 export type { Props as RouteMenuProps } from './RouteMenu';
 export type { Props as TableProps } from './Table';
 
+export { default as Actions } from './Actions';
 export { default as Cell } from './Cell';
 export { default as ConfigProvider } from './ConfigProvider';
 export { default as Drawer } from './Drawer';

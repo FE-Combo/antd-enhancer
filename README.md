@@ -39,4 +39,4 @@ MIT
 
 ## TODO
 
-compoents: Action AsyncTask Cascader DynamicForm Flex InputAddress PageHeader Preview Select TableCoolumnSetting FormUpload ThemePicker Divider
+compoents: AsyncTask Cascader DynamicForm Flex InputAddress PageHeader Preview Select TableCoolumnSetting FormUpload ThemePicker Divider
