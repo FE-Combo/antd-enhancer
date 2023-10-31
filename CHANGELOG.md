@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/FE-Combo/antd-enhancer/compare/v0.1.1...v0.1.2) (2023-10-31)
+
+### Bug Fixes
+
+- update styles in filter ([cefe4b3](https://github.com/FE-Combo/antd-enhancer/commit/cefe4b343738a80b834e9332cdc9988e9196c893))
+
 ### [0.1.1](https://github.com/FE-Combo/antd-enhancer/compare/v0.1.0...v0.1.1) (2023-10-31)
 
 ### Bug Fixes
