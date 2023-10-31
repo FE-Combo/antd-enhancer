@@ -9,7 +9,6 @@ const genDefaultStyle = (
     [`.${prefixCls}`]: {
       background: token.colorBgBase,
       alignItems: 'flex-end',
-      margin: `${token.padding}px ${token.padding}px 0`,
 
       '& .ant-form-item': {
         margin: `0 0 ${token.margin}px 0`,
