@@ -11,7 +11,6 @@ const genDefaultStyle = (
       alignItems: 'flex-end',
 
       '& .ant-form-item': {
-        margin: `0 0 ${token.margin}px 0`,
         display: 'flex',
         flexDirection: 'column',
 
@@ -31,13 +30,7 @@ const genDefaultStyle = (
           },
         },
       },
-      [`& .${prefixCls}-empty-item`]: {
-        marginBottom: '0',
-      },
-
       [`& .${prefixCls}-button-wrapper`]: {
-        marginBottom: `${token.margin}px`,
-
         [`& .${prefixCls}-button-wrapper-sider`]: {
           '& .ant-space-item': {
             textWrap: 'nowrap',

@@ -41,9 +41,11 @@ export type RefInternalFilter = (
 
 function InternalFilter(props: Props, ref: Ref<FormInstance>) {
   const prefixCls = 'antd-enhancer-filter';
+
   const { locale = defaultLocale } = useContext<ConfigConsumerProps>(
     EnhancedConfigContext,
   );
+
   const { theme, token, hashId } = useToken();
 
   // 全局注册，内部会做缓存优化
@@ -66,17 +68,25 @@ function InternalFilter(props: Props, ref: Ref<FormInstance>) {
     resetText,
     fixed = true,
   } = props;
+
   const [expand, setExpand] = useState(false);
+
   const nextChidren = useMemo(
     () => (children instanceof Array ? children.filter((_) => _) : children),
     [children],
   );
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  const [form] = Form.useForm(preForm as any);
+
+  const childrenCount = useMemo(
+    () => React.Children.count(nextChidren),
+    [maxCount, children],
+  );
 
   // Form尾部需要补充个数
   const numberOfSupplements =
     maxCount - ((React.Children.count(nextChidren) + 1) % maxCount);
+
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  const [form] = Form.useForm(preForm as any);
 
   const handleReset = () => {
     form.resetFields();
@@ -87,6 +97,9 @@ function InternalFilter(props: Props, ref: Ref<FormInstance>) {
     // form.getFieldsValue(): 只能获取真实存在的dom节点值; form.getFieldsValue(true): 可以获取包括隐藏的dom节点
     onSearch?.(form.getFieldsValue(true));
   };
+
+  // fixed 时倒数 mod 个无需 margin
+  const mod = childrenCount % maxCount;
 
   return wrapSSR(
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -100,7 +113,7 @@ function InternalFilter(props: Props, ref: Ref<FormInstance>) {
     >
       {React.Children.map(nextChidren, (_, index) => {
         const formItemProps = _.props['data-form-item-props'] || {};
-        const count = expand ? React.Children.count(nextChidren) : maxCount - 1;
+        const count = expand ? childrenCount : maxCount - 1;
         if (index < count) {
           return (
             <Form.Item
@@ -113,6 +126,10 @@ function InternalFilter(props: Props, ref: Ref<FormInstance>) {
                     ? 0
                     : token.padding
                   : token.padding,
+                margin:
+                  !fixed || (expand && index + 1 + mod <= childrenCount)
+                    ? `0 0 ${token.margin}px 0`
+                    : 0,
               }}
             >
               {_}
@@ -122,7 +139,10 @@ function InternalFilter(props: Props, ref: Ref<FormInstance>) {
       })}
       <div
         className={classNames(prefixCls + '-button-wrapper', hashId)}
-        style={{ width: fixed ? `${(1 / maxCount) * 100}%` : undefined }}
+        style={{
+          width: fixed ? `${(1 / maxCount) * 100}%` : undefined,
+          marginBottom: fixed ? undefined : token.margin,
+        }}
       >
         <Space>
           <Button type="primary" htmlType="submit" {...searchProps}>
