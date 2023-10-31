@@ -69,4 +69,4 @@ export default () => {
 
 #### children
 
-child 类型必须是表单组件，通过传入`data-form-item-props`属性，可以设置 FormItem 的属性
+child 类型必须是表单组件，通过传入`data-form-item-props`属性，可以设置 [FormItem](https://ant-design.antgroup.com/components/form-cn#formitem) 的属性

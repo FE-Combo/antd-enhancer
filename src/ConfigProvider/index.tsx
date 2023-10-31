@@ -1,6 +1,6 @@
 import { ConfigProvider } from 'antd';
 import { ConfigProviderProps } from 'antd/lib/config-provider';
-import React, { FC, createContext } from 'react';
+import React, { FC, createContext, memo } from 'react';
 import en from './locales/en';
 
 export interface ConfigConsumerProps {
@@ -25,4 +25,4 @@ const Index: FC<Props> = (props) => {
   );
 };
 
-export default Index;
+export default memo(Index);
