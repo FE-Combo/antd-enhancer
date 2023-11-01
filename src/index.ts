@@ -21,6 +21,7 @@ export type { Props as ConfigProviderProps } from './ConfigProvider';
 export type { Props as DrawerProps } from './Drawer';
 export type { Props as FilterProps } from './Filter';
 export type { Props as ModalProps } from './Modal';
+export type { Props as PageHeaderProps } from './PageHeader';
 export type { Props as RouteMenuProps } from './RouteMenu';
 export type { Props as TableProps } from './Table';
 
@@ -30,5 +31,6 @@ export { default as ConfigProvider } from './ConfigProvider';
 export { default as Drawer } from './Drawer';
 export { default as Filter } from './Filter';
 export { default as Modal } from './Modal';
+export { default as PageHeader } from './PageHeader';
 export { default as RouteMenu } from './RouteMenu';
 export { default as Table } from './Table';
