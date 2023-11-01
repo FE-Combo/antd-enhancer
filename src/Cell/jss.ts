@@ -287,6 +287,13 @@ const genDefaultStyle = (
         fontWeight: token.fontWeightStrong,
       },
     },
+    {
+      [`.${prefixCls}-ellipsis`]: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      },
+    },
     colors,
     hoverColors,
     activeColors,

@@ -39,4 +39,4 @@ MIT
 
 ## TODO
 
-compoents: AsyncTask Cascader DynamicForm Flex InputAddress Preview Select TableCoolumnSetting FormUpload ThemePicker
+compoents: AsyncTask Cascader DynamicForm InputAddress Preview Select TableCoolumnSetting FormUpload ThemePicker Cell-Tooltip

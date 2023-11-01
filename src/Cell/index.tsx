@@ -58,6 +58,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   paddingLeftType?: keyof typeof PaddingType;
   borderRadiusType?: keyof typeof BorderRadiusType;
   boxShadowType?: keyof typeof BoxShadowType;
+  ellipsis?: boolean;
 }
 
 export type RefInternalCell = (
@@ -97,6 +98,7 @@ function InternalCell(
     hoverBorderColorType,
     activeBorderColorType,
     children,
+    ellipsis = false,
     ...restProps
   } = props;
   const prefixCls = 'antd-enhancer-cell';
@@ -137,6 +139,7 @@ function InternalCell(
     activeBorderColorType &&
       `${prefixCls}-borderColor-active-${activeBorderColorType}`,
     fontWeight && `${prefixCls}-fontWeight-${fontWeight}`,
+    ellipsis && `${prefixCls}-ellipsis`,
   ].filter((_) => _);
 
   return wrapSSR(
@@ -164,3 +167,17 @@ const ForwardExternalCell = forwardRef(ExternalCell);
 ForwardExternalCell.displayName = 'Cell';
 
 export default ForwardExternalCell;
+
+// TODO
+// // 获取文本元素的实际宽度
+// const textWidth = textElement.offsetWidth;
+
+// // 获取文本元素的内容宽度
+// const textContentWidth = textElement.scrollWidth;
+
+// // 检查文本是否被截断
+// if (textWidth < textContentWidth) {
+//   console.log('文本被截断显示省略号');
+// } else {
+//   console.log('文本没有被截断');
+// }
