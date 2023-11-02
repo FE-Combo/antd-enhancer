@@ -1,37 +1,38 @@
 import { useStyleRegister } from '@ant-design/cssinjs';
 import { Table, Typography, theme } from 'antd';
-import { AnyObject } from 'antd/lib/_util/type';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType } from 'antd/lib/table/interface';
 import classNames from 'classnames';
+import { DefaultRecordType } from 'rc-table/lib/interface';
 import React, {
   ForwardedRef,
   Ref,
   forwardRef,
   useEffect,
   useMemo,
-  useRef,
 } from 'react';
 import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-export interface Props<T extends AnyObject = AnyObject> extends TableProps<T> {
+export interface Props<T extends DefaultRecordType = DefaultRecordType>
+  extends TableProps<T> {
   defaultData?: string;
 }
 
-export type RefInternalTable = <RecordType extends AnyObject = AnyObject>(
+export type RefInternalTable = <
+  RecordType extends DefaultRecordType = DefaultRecordType,
+>(
   props: React.PropsWithChildren<Props<RecordType>> & {
     ref?: React.Ref<HTMLDivElement>;
   },
 ) => React.ReactElement;
 
-const InternalTable = <T extends AnyObject = AnyObject>(
+const InternalTable = <T extends DefaultRecordType = DefaultRecordType>(
   props: Props<T>,
   ref: ForwardedRef<HTMLDivElement>,
 ) => {
   const prefixCls = 'antd-enhancer-table';
-  const countRef = useRef(0);
   const { theme, token, hashId } = useToken();
 
   // 全局注册，内部会做缓存优化
@@ -104,13 +105,11 @@ const InternalTable = <T extends AnyObject = AnyObject>(
       : [],
   );
 
-  const defaultIndexRowKey = () => (countRef.current++).toString();
-
   return wrapSSR(
     <Table
       ref={ref}
       className={classNames(prefixCls, hashId, className)}
-      rowKey={defaultIndexRowKey || rowKey}
+      rowKey={rowKey || ((_, i) => i!.toString())}
       columns={nextColumns}
       pagination={pagination}
       {...restProps}
@@ -122,7 +121,7 @@ const InternalTable = <T extends AnyObject = AnyObject>(
 
 const ForwardInternalTable = forwardRef(InternalTable) as RefInternalTable;
 
-function ExternalTable<T extends AnyObject = AnyObject>(
+function ExternalTable<T extends DefaultRecordType = DefaultRecordType>(
   props: Props<T>,
   ref: Ref<HTMLDivElement>,
 ) {
