@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/FE-Combo/antd-enhancer/compare/v0.1.2...v0.2.0) (2023-11-02)
+
+### Features
+
+- add GridList component ([76ca918](https://github.com/FE-Combo/antd-enhancer/commit/76ca91881ba8553fa2c5a0df4edb7b5a5db20b5c))
+- add PageHeader component ([eed167c](https://github.com/FE-Combo/antd-enhancer/commit/eed167c0d837b7b4671512983d1ec57c96e9b486))
+
+### Bug Fixes
+
+- fix Table default rowKey ([0c30eb2](https://github.com/FE-Combo/antd-enhancer/commit/0c30eb2910db5bdb934414ca4e75b895d7f33edc))
+
 ### [0.1.2](https://github.com/FE-Combo/antd-enhancer/compare/v0.1.1...v0.1.2) (2023-10-31)
 
 ### Bug Fixes
