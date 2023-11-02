@@ -1,9 +1,9 @@
 import { useStyleRegister } from '@ant-design/cssinjs';
 import { Table, Typography, theme } from 'antd';
+import { AnyObject } from 'antd/lib/_util/type';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType } from 'antd/lib/table/interface';
 import classNames from 'classnames';
-import { DefaultRecordType } from 'rc-table/lib/interface';
 import React, {
   ForwardedRef,
   Ref,
@@ -15,20 +15,17 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-export interface Props<T extends DefaultRecordType = DefaultRecordType>
-  extends TableProps<T> {
+export interface Props<T extends AnyObject = AnyObject> extends TableProps<T> {
   defaultData?: string;
 }
 
-export type RefInternalTable = <
-  RecordType extends DefaultRecordType = DefaultRecordType,
->(
+export type RefInternalTable = <RecordType extends AnyObject = AnyObject>(
   props: React.PropsWithChildren<Props<RecordType>> & {
     ref?: React.Ref<HTMLDivElement>;
   },
 ) => React.ReactElement;
 
-const InternalTable = <T extends DefaultRecordType = DefaultRecordType>(
+const InternalTable = <T extends AnyObject = AnyObject>(
   props: Props<T>,
   ref: ForwardedRef<HTMLDivElement>,
 ) => {
@@ -121,7 +118,7 @@ const InternalTable = <T extends DefaultRecordType = DefaultRecordType>(
 
 const ForwardInternalTable = forwardRef(InternalTable) as RefInternalTable;
 
-function ExternalTable<T extends DefaultRecordType = DefaultRecordType>(
+function ExternalTable<T extends AnyObject = AnyObject>(
   props: Props<T>,
   ref: Ref<HTMLDivElement>,
 ) {
