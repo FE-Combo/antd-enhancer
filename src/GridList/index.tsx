@@ -17,7 +17,7 @@ export interface Props {
   loading?: boolean;
   className?: string;
   style?: CSSProperties;
-  pagination: PaginationProps | boolean;
+  pagination?: PaginationProps | boolean;
   empty?: React.ReactNode;
 }
 
@@ -52,18 +52,22 @@ function InternalGridList(
 
   return wrapSSR(
     <Spin spinning={loading}>
-      <div
-        ref={ref}
-        className={classNames(prefixCls, hashId, className)}
-        style={{
-          gridTemplateColumns: `repeat(${count},  calc((100% - ${
-            (count - 1) * token.marginSM
-          }px) / ${count}))`,
-          ...style,
-        }}
-      >
-        {childrenLength > 0 ? children : empty}
-      </div>
+      {childrenLength ? (
+        <div
+          ref={ref}
+          className={classNames(prefixCls, hashId, className)}
+          style={{
+            gridTemplateColumns: `repeat(${count},  calc((100% - ${
+              (count - 1) * token.marginSM
+            }px) / ${count}))`,
+            ...style,
+          }}
+        >
+          {children}
+        </div>
+      ) : (
+        empty
+      )}
       {pagination && (
         <div
           className={classNames(prefixCls + '-pagination', hashId, className)}
@@ -81,7 +85,10 @@ const ForwardInternalGridList = forwardRef(
   InternalGridList,
 ) as RefInternalGridList;
 
-function ExternalGridList(props: Props, ref: Ref<HTMLDivElement>) {
+function ExternalGridList(
+  props: PropsWithChildren<Props>,
+  ref: Ref<HTMLDivElement>,
+) {
   return <ForwardInternalGridList {...props} ref={ref} />;
 }
 
