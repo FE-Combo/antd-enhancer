@@ -7,6 +7,7 @@ const genDefaultStyle = (
 ): CSSInterpolation => [
   {
     [`.${prefixCls}`]: {
+      padding: `${token.padding}px ${token.paddingLG}px`,
       [`& .${prefixCls}-breadcrumb`]: {
         marginBottom: token.marginXS,
       },
