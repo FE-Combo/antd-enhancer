@@ -1,6 +1,9 @@
-import { Menu, MenuProps, MenuRef, Spin } from 'antd';
+import { useStyleRegister } from '@ant-design/cssinjs';
+import { Menu, MenuProps, Spin, theme } from 'antd';
+import classNames from 'classnames';
 import { SelectInfo } from 'rc-menu/lib/interface';
 import React, {
+  CSSProperties,
   ForwardedRef,
   Key,
   Ref,
@@ -11,6 +14,9 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import genDefaultStyle from './jss';
+
+const { useToken } = theme;
 
 // 交集
 const intersection = (a: Key[], b: Key[]) => a.filter((v) => b.includes(v));
@@ -30,7 +36,7 @@ const pathnameToArray = (value = '') =>
 
 export type RefInternalRouteMenu = (
   props: React.PropsWithChildren<Props> & {
-    ref?: React.Ref<MenuRef>;
+    ref?: React.Ref<HTMLDivElement>;
   },
 ) => React.ReactElement;
 
@@ -43,17 +49,31 @@ export interface Props
   onChange?: (value: string) => void;
   accordion?: boolean;
   loading?: boolean;
+  rootClassName?: string;
+  rootStyle?: CSSProperties;
 }
 
-function InternalRouteMenu(props: Props, ref: ForwardedRef<MenuRef>) {
+function InternalRouteMenu(props: Props, ref: ForwardedRef<HTMLDivElement>) {
   const {
     value,
     onChange,
     items = [],
     accordion = false,
     loading = false,
+    rootClassName = '',
+    rootStyle,
     ...restProps
   } = props;
+
+  const prefixCls = 'antd-enhancer-route-menu';
+  const { theme, token, hashId } = useToken();
+
+  // 全局注册，内部会做缓存优化
+  const wrapSSR = useStyleRegister(
+    { theme, token, hashId, path: [prefixCls] },
+    () => [genDefaultStyle(prefixCls)],
+  );
+
   const [openKey, setOpenKey] = useState<React.Key[]>([]);
 
   const selectedKeys = useMemo(() => pathnameToArray(value), [value]);
@@ -106,18 +126,23 @@ function InternalRouteMenu(props: Props, ref: ForwardedRef<MenuRef>) {
     [accordion, items],
   );
 
-  return (
-    <Spin spinning={loading}>
-      <Menu
-        ref={ref}
-        selectedKeys={selectedKeys}
-        openKeys={openKey as string[]}
-        onSelect={onSelect}
-        onOpenChange={onOpenChange}
-        items={items}
-        {...restProps}
-      />
-    </Spin>
+  return wrapSSR(
+    <div
+      className={classNames(prefixCls, hashId, rootClassName)}
+      ref={ref}
+      style={rootStyle}
+    >
+      <Spin spinning={loading}>
+        <Menu
+          selectedKeys={selectedKeys}
+          openKeys={openKey as string[]}
+          onSelect={onSelect}
+          onOpenChange={onOpenChange}
+          items={items}
+          {...restProps}
+        />
+      </Spin>
+    </div>,
   );
 }
 
@@ -125,7 +150,7 @@ const ForwardInternalRouteMenu = forwardRef(
   InternalRouteMenu,
 ) as RefInternalRouteMenu;
 
-function ExternalRouteMenu(props: Props, ref: Ref<MenuRef>) {
+function ExternalRouteMenu(props: Props, ref: Ref<HTMLDivElement>) {
   return <ForwardInternalRouteMenu {...props} ref={ref} />;
 }
 

@@ -93,11 +93,13 @@ export default () => {
 
 # 基本参数
 
-| 参数      | 说明                                              | 类型                                | 默认值 |
-| --------- | ------------------------------------------------- | ----------------------------------- | ------ |
-| loading   | 加载状态                                          | `boolean`                           | false  |
-| accordion | 是否开启手风琴模式                                | `boolean`                           | false  |
-| value     | 必填，当前选中的菜单项 key，需要传入当前路由      | `number \| string`                  | -      |
-| onChange  | 被选中时调用，参数为选中项的 key 值，key 值为路由 | `(value: number \| string) => void` | -      |
+| 参数          | 说明                                              | 类型                                | 默认值 |
+| ------------- | ------------------------------------------------- | ----------------------------------- | ------ |
+| loading       | 加载状态                                          | `boolean`                           | false  |
+| accordion     | 是否开启手风琴模式                                | `boolean`                           | false  |
+| value         | 必填，当前选中的菜单项 key，需要传入当前路由      | `number \| string`                  | -      |
+| onChange      | 被选中时调用，参数为选中项的 key 值，key 值为路由 | `(value: number \| string) => void` | -      |
+| rootClassname | 根节点样式类名                                    | `string`                            | -      |
+| rootStyle     | 根节点样式                                        | `React.CSSProperties`               | -      |
 
 [Menu 配置参考 antd 文档](https://ant-design.antgroup.com/components/menu-cn#api)
