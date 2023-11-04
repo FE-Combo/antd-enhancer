@@ -39,4 +39,4 @@ MIT
 
 ## TODO
 
-compoents: AsyncTask Cascader DynamicForm InputAddress Preview TableCoolumnSetting FormUpload ThemePicker Cell-Tooltip Select CameraCapture
+compoents: AsyncTask Cascader DynamicForm InputAddress Preview TableCoolumnSetting FormUpload ThemePicker Cell-Tooltip CameraCapture

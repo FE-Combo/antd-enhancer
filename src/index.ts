@@ -24,6 +24,7 @@ export type { Props as GridListProps } from './GridList';
 export type { Props as ModalProps } from './Modal';
 export type { Props as PageHeaderProps } from './PageHeader';
 export type { Props as RouteMenuProps } from './RouteMenu';
+export type { Props as SelectProps } from './Select';
 export type { Props as TableProps } from './Table';
 
 export { default as Actions } from './Actions';
@@ -35,4 +36,5 @@ export { default as GridList } from './GridList';
 export { default as Modal } from './Modal';
 export { default as PageHeader } from './PageHeader';
 export { default as RouteMenu } from './RouteMenu';
+export { default as Select } from './Select';
 export { default as Table } from './Table';

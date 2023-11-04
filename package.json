@@ -61,7 +61,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-no-ssr": "^1.1.5",
     "@umijs/lint": "^4.0.0",
-    "antd": "^5.10.2",
+    "antd": "^5.11.0",
     "dumi": "^2.2.13",
     "eslint": "^8.23.0",
     "father": "^4.1.0",
