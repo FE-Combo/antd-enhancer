@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/FE-Combo/antd-enhancer/compare/v0.2.1...v0.3.0) (2023-11-04)
+
+### Features
+
+- add Input component ([bce9316](https://github.com/FE-Combo/antd-enhancer/commit/bce93167a353e276ba7fa754603cff29ebf9e271))
+- add Select component ([6c5a4b6](https://github.com/FE-Combo/antd-enhancer/commit/6c5a4b656543322149352adbd1bd70a41c8332d2))
+
+### Bug Fixes
+
+- fix bug for GtrdList component ([4dbdb4a](https://github.com/FE-Combo/antd-enhancer/commit/4dbdb4ae33cae14e3d73f7518fb2809ad608f483))
+- fix PageHeader style ([4d529a9](https://github.com/FE-Combo/antd-enhancer/commit/4d529a9f5f27ae103f1e16c217de589e2b67978c))
+- fix RouteMenu component styles ([ce59ea7](https://github.com/FE-Combo/antd-enhancer/commit/ce59ea773a7ea09a1dbd76e4f64bb4e434befe1f))
+
 ### [0.2.1](https://github.com/FE-Combo/antd-enhancer/compare/v0.2.0...v0.2.1) (2023-11-02)
 
 ### Bug Fixes
