@@ -4,6 +4,7 @@ import { AnyObject } from 'antd/lib/_util/type';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType } from 'antd/lib/table/interface';
 import classNames from 'classnames';
+import { Reference } from 'rc-table';
 import React, {
   ForwardedRef,
   Ref,
@@ -21,13 +22,13 @@ export interface Props<T extends AnyObject = AnyObject> extends TableProps<T> {
 
 export type RefInternalTable = <RecordType extends AnyObject = AnyObject>(
   props: React.PropsWithChildren<Props<RecordType>> & {
-    ref?: React.Ref<HTMLDivElement>;
+    ref?: React.Ref<Reference>;
   },
 ) => React.ReactElement;
 
 const InternalTable = <T extends AnyObject = AnyObject>(
   props: Props<T>,
-  ref: ForwardedRef<HTMLDivElement>,
+  ref: ForwardedRef<Reference>,
 ) => {
   const prefixCls = 'antd-enhancer-table';
   const { theme, token, hashId } = useToken();
@@ -120,7 +121,7 @@ const ForwardInternalTable = forwardRef(InternalTable) as RefInternalTable;
 
 function ExternalTable<T extends AnyObject = AnyObject>(
   props: Props<T>,
-  ref: Ref<HTMLDivElement>,
+  ref: Ref<Reference>,
 ) {
   return <ForwardInternalTable<T> {...props} ref={ref} />;
 }

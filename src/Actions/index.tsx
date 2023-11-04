@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd';
 import { Dropdown, DropdownProps, Space, Typography, theme } from 'antd';
 import { SpaceSize } from 'antd/es/space';
 import classNames from 'classnames';
-import React, { CSSProperties, FC, Key, ReactNode } from 'react';
+import React, { CSSProperties, Key, ReactNode, Ref, forwardRef } from 'react';
 import genDefaultStyle from './jss';
 
 const { useToken } = theme;
@@ -42,7 +42,13 @@ export interface Props {
   dropdownTrigger?: ('click' | 'hover')[];
 }
 
-const Index: FC<Props> = (props) => {
+export type RefInternalActions = (
+  props: React.PropsWithChildren<Props> & {
+    ref?: React.Ref<HTMLDivElement>;
+  },
+) => React.ReactElement;
+
+function InternalActions(props: Props, ref: Ref<HTMLDivElement>) {
   const prefixCls = 'antd-enhancer-actions';
   const { theme, token, hashId } = useToken();
   // 全局注册，内部会做缓存优化
@@ -82,6 +88,7 @@ const Index: FC<Props> = (props) => {
 
   return wrapSSR(
     <Space
+      ref={ref}
       className={classNames(prefixCls, hashId, className)}
       style={style}
       size={size}
@@ -144,6 +151,18 @@ const Index: FC<Props> = (props) => {
         : items.map((_, index) => itemRender(_, index))}
     </Space>,
   );
-};
+}
 
-export default Index;
+const ForwardInternalActions = forwardRef(
+  InternalActions,
+) as RefInternalActions;
+
+function ExternalActions(props: Props, ref: Ref<HTMLDivElement>) {
+  return <ForwardInternalActions {...props} ref={ref} />;
+}
+
+const ForwardExternalActions = forwardRef(ExternalActions);
+
+ForwardExternalActions.displayName = 'Actions';
+
+export default ForwardExternalActions;

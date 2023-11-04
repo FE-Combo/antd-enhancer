@@ -204,6 +204,8 @@ function ExternalSelect(
 
 const ForwardExternalSelect = forwardRef(ExternalSelect) as Func;
 
+ForwardExternalSelect.displayName = 'Select';
+
 ForwardExternalSelect.SECRET_COMBOBOX_MODE_DO_NOT_USE =
   Select.SECRET_COMBOBOX_MODE_DO_NOT_USE;
 
