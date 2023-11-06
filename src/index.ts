@@ -1,4 +1,5 @@
 export type { Props as ActionsProps } from './Actions';
+export type { Props as CameraProps } from './Camera';
 export type { Props as CellProps } from './Cell';
 export {
   ActiveBorderColorType as CellActiveBorderColorType,
@@ -31,6 +32,7 @@ export type { Props as SelectProps } from './Select';
 export type { Props as TableProps } from './Table';
 
 export { default as Actions } from './Actions';
+export { default as Camera } from './Camera';
 export { default as Cell } from './Cell';
 export { default as ConfigProvider, useToken } from './ConfigProvider';
 export { default as Drawer } from './Drawer';
