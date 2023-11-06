@@ -29,6 +29,7 @@ import {
   MailOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import { SelectInfo } from 'rc-menu/lib/interface';
 
 function getItem(
   label: React.ReactNode,
@@ -84,9 +85,13 @@ export default () => {
     ]),
   ];
 
+  const handleChange = (value: string, info: SelectInfo) => {
+    setKey(value);
+    console.info(info)
+  };
 
   return (
-    <RouteMenu mode="inline" value={key} accordion onChange={setKey} items={items} />
+    <RouteMenu mode="inline" value={key} accordion onChange={handleChange} items={items} />
   )
 }
 ```

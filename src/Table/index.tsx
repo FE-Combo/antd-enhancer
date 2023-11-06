@@ -63,7 +63,8 @@ const InternalTable = <T extends AnyObject = AnyObject>(
               if (typeof value === 'bigint') {
                 return value.toString();
               } else {
-                const nextValue = JSON.stringify(value);
+                const nextValue =
+                  typeof value === 'string' ? value : JSON.stringify(value);
                 return (
                   <Typography.Text ellipsis={{ tooltip: nextValue }}>
                     {nextValue}

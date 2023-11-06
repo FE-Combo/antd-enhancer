@@ -32,7 +32,7 @@ export type { Props as TableProps } from './Table';
 
 export { default as Actions } from './Actions';
 export { default as Cell } from './Cell';
-export { default as ConfigProvider } from './ConfigProvider';
+export { default as ConfigProvider, useToken } from './ConfigProvider';
 export { default as Drawer } from './Drawer';
 export { default as Filter } from './Filter';
 export { default as GridList } from './GridList';

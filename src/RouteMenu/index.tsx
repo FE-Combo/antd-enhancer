@@ -46,7 +46,7 @@ export interface Props
     'selectedKeys' | 'onSelect' | 'openKeys' | 'onOpenChange' | 'onChange'
   > {
   value: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: string, info: SelectInfo) => void;
   accordion?: boolean;
   loading?: boolean;
   rootClassName?: string;
@@ -99,7 +99,7 @@ function InternalRouteMenu(props: Props, ref: ForwardedRef<HTMLDivElement>) {
         // 只展开当前菜单的父级菜单
         setOpenKey(selectInfo.keyPath);
       }
-      onChange?.(selectInfo.key);
+      onChange?.(selectInfo.key, selectInfo);
     },
     [accordion],
   );
