@@ -6,4 +6,7 @@ export default {
     expand: 'Expand',
     collapse: 'Collapse',
   },
+  pictureCardUpload: {
+    clickUpload: 'Click to upload',
+  },
 };

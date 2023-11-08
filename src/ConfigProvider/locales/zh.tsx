@@ -6,4 +6,7 @@ export default {
     expand: '展开',
     collapse: '收起',
   },
+  pictureCardUpload: {
+    clickUpload: '点击上传',
+  },
 };
