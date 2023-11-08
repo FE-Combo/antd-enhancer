@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/FE-Combo/antd-enhancer/compare/v0.3.0...v0.4.0) (2023-11-08)
+
+### Features
+
+- add Camera component ([bda9b3e](https://github.com/FE-Combo/antd-enhancer/commit/bda9b3e9ab64ec724c5fb2d751ecd5a1977ac87d))
+- add PictureCardUpload compoennt ([e215640](https://github.com/FE-Combo/antd-enhancer/commit/e215640b8d62ab2e0e9d4df7fe62cc3f72ab96f2))
+- add token in ConfigProvider component ([96fd8b9](https://github.com/FE-Combo/antd-enhancer/commit/96fd8b99f882dd8f020c2a74da884924321479b2))
+
 ## [0.3.0](https://github.com/FE-Combo/antd-enhancer/compare/v0.2.1...v0.3.0) (2023-11-04)
 
 ### Features
