@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/FE-Combo/antd-enhancer/compare/v0.4.0...v0.5.0) (2023-11-09)
+
+### Features
+
+- add Mask component ([79e577d](https://github.com/FE-Combo/antd-enhancer/commit/79e577da8339b6ad4f7be6edc410fdce7d37e6ac))
+
 ## [0.4.0](https://github.com/FE-Combo/antd-enhancer/compare/v0.3.0...v0.4.0) (2023-11-08)
 
 ### Features
