@@ -1,18 +1,25 @@
 import { useStyleRegister } from '@ant-design/cssinjs';
 import { CloudUploadOutlined } from '@ant-design/icons';
-import { Typography, Upload, theme } from 'antd';
-import ImgCrop, { ImgCropProps } from 'antd-img-crop';
+import { Upload, theme } from 'antd';
 import {
   RcFile,
   UploadChangeParam,
   UploadFile,
   UploadProps,
 } from 'antd/es/upload';
+import { UploadRef } from 'antd/es/upload/Upload';
 import classNames from 'classnames';
-import React, { ReactNode, useContext } from 'react';
+import React, {
+  ReactNode,
+  Suspense,
+  forwardRef,
+  lazy,
+  useContext,
+} from 'react';
 import { ConfigConsumerProps, EnhancedConfigContext } from '../ConfigProvider';
 import defaultLocale from '../ConfigProvider/locales/en';
 import genDefaultStyle from './jss';
+import { ImgCropProps } from './type';
 
 const { useToken } = theme;
 
@@ -20,13 +27,14 @@ export type BeforeUploadValueType = void | boolean | string | Blob | File;
 
 export const DEFAULT_ACCEPT = 'image/png,image/jpg,image/jpeg,pptx';
 
-export interface Props<T>
+export interface Props<T = any>
   extends Omit<UploadProps<T>, 'onChange' | 'listType'> {
   size?: number; // 文件大小 单位M
   description?: string | ReactNode;
   cropConfig?: Partial<ImgCropProps>;
   children?: ReactNode | undefined;
   enableCrop?: boolean;
+  listType?: 'picture-card' | 'picture-circle';
   checkFile?: boolean;
   onChange?: (
     fileList: UploadFile[],
@@ -38,9 +46,13 @@ export interface Props<T>
 export enum ErrorType {
   SIZE_EXCCEEDS_LIMIT = 'SIZE_EXCCEEDS_LIMIT',
   FILE_FORMAT_ERROR = 'FILE_FORMAT_ERROR',
+  UPLOAD_ERROR = 'UPLOAD_ERROR',
 }
 
-function Index<T>(props: Props<T>) {
+const InternalPictureCardUpload: React.ForwardRefRenderFunction<
+  UploadRef,
+  Props
+> = (props, ref) => {
   const prefixCls = 'ka-component-picture-card-upload';
   const { theme, token, hashId } = useToken();
 
@@ -66,12 +78,14 @@ function Index<T>(props: Props<T>) {
     accept,
     children,
     onError,
+    listType = 'picture-card',
     ...restProps
   } = props;
 
   const handleChange: UploadProps['onChange'] = (info) => {
-    if (info.file.status && info.file.status !== 'error') {
-      onChange?.(info.fileList, info);
+    onChange?.(info.fileList, info);
+    if (info?.file?.status === 'error') {
+      onError?.(ErrorType.UPLOAD_ERROR);
     }
   };
 
@@ -90,13 +104,15 @@ function Index<T>(props: Props<T>) {
     if (isLtSize && canUploadFile && beforeUpload) {
       result = await beforeUpload(file, fileList);
     }
-    return isLtSize && canUploadFile ? result : Promise.reject(true);
+
+    return isLtSize && canUploadFile ? result : Upload.LIST_IGNORE;
   };
 
   const uploadComponent = () => (
     <Upload
+      ref={ref}
       accept={accept || DEFAULT_ACCEPT}
-      listType="picture-card"
+      listType={listType}
       fileList={fileList}
       onChange={handleChange}
       maxCount={maxCount}
@@ -115,25 +131,49 @@ function Index<T>(props: Props<T>) {
     </Upload>
   );
 
+  const withImgCropUploadCompoennt = () => {
+    try {
+      // 按需导入 antd-img-crop, 避免打包体积过大
+      const ImgCrop = lazy(
+        () =>
+          import(
+            /* webpackChunkName: "antd-enhancer-picture-card-upload-img-crop" */ 'antd-img-crop'
+          ),
+      );
+      return (
+        <Suspense>
+          <ImgCrop rotationSlider showGrid {...cropConfig}>
+            {uploadComponent()}
+          </ImgCrop>
+        </Suspense>
+      );
+    } catch (error) {
+      console.error(error);
+      return uploadComponent();
+    }
+  };
+
   return wrapSSR(
     <div className={classNames(prefixCls, hashId)}>
-      {enableCrop ? (
-        <ImgCrop rotationSlider showGrid {...cropConfig}>
-          {uploadComponent()}
-        </ImgCrop>
-      ) : (
-        uploadComponent()
-      )}
-      {description && (
-        <Typography.Text
-          className={classNames(prefixCls + '-description', hashId)}
-          type="secondary"
-        >
-          {description}
-        </Typography.Text>
-      )}
+      {enableCrop ? withImgCropUploadCompoennt() : uploadComponent()}
+      {description}
     </div>,
   );
-}
+};
 
-export default Index;
+const ForwardInternalPictureCardUpload = forwardRef<UploadRef, Props>(
+  InternalPictureCardUpload,
+);
+
+type InternalPictureCardUploadType = typeof InternalPictureCardUpload;
+
+type CompoundedComponent<T = any> = InternalPictureCardUploadType & {
+  <U extends T>(
+    props: React.PropsWithChildren<Props<U>> & React.RefAttributes<any>,
+  ): React.ReactElement;
+};
+
+const PictureCardUpload =
+  ForwardInternalPictureCardUpload as CompoundedComponent;
+
+export default PictureCardUpload;

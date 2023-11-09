@@ -1,10 +1,11 @@
 ---
 title: PictureCardUpload
+
 order: 1
-nav:
+group:
   order: 1
   title: 拓展组件
-  path: /extends
+  path: /expand
 ---
 
 # PictureCardUpload
@@ -14,7 +15,7 @@ nav:
 - 默认限制上传数量为`1`
 - 默认最大可上传文件大小为`2M`
 - 重写了`onChange`类型（更好的兼容 Form）
-- 不再支持 `listType` 属性
+- `listType` 仅支持`'picture-card' | 'picture-circle'`
 - 内置文件大小与文件类型的判断，默认开启
 
 # 代码示例
@@ -23,7 +24,7 @@ nav:
 import React, { useState } from 'react';
 import { PictureCardUpload } from 'antd-enhancer';
 import { Form, Button, Typography } from 'antd';
-import { UploadFile } from 'antd/es/upload';
+import { UploadFile } from 'antd/lib/upload';
 
 export default () => {
   const [fileList, setFileList] = useState<UploadFile[]>([
@@ -52,6 +53,22 @@ export default () => {
     }
   };
 
+  const handleUploadError = (type: PictureCardUploadErrorType) => {
+    switch (type) {
+      case PictureCardUploadErrorType.FILE_FORMAT_ERROR:
+        message.error('图片格式错误');
+        break;
+      case PictureCardUploadErrorType.SIZE_EXCCEEDS_LIMIT:
+        message.error('图片大小超过限制');
+        break;
+      case PictureCardUploadErrorType.UPLOAD_ERROR:
+        message.error('图片上传失败');
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <div>
       <Typography.Text type="secondary">常规使用</Typography.Text>
@@ -79,7 +96,17 @@ export default () => {
         <Form.Item
           label="图片上传"
           name="upload"
-          rules={[{ required: true, message: '请输入图片' }]}
+          rules={[{
+            required: true,
+            message: '请输入图片',
+          },{
+            validator: async (_, values: UploadFile[]=[]) => {
+              if (values.find(_=>_.status === "error")) {
+                return Promise.reject(new Error('图片上传失败，请重新上传'));
+              }
+              return Promise.resolve();
+            }
+          }]}
           valuePropName="fileList"
           initialValue={[]}
         >
@@ -89,6 +116,7 @@ export default () => {
             description="照片支持.jpg、png格式，文件控制在2M以内；建议尺寸572*400"
             cropConfig={{ aspect: 2, fillColor: '#fff0' }}
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            onError={handleUploadError}
           />
         </Form.Item>
         <Button type="primary" htmlType="submit">
@@ -140,4 +168,44 @@ const onPreview = async (file: UploadFile) => {
   }
   setPreviewUploadFile(file);
 };
+```
+
+#### 如何将图片二进制资源放入 body 中上传？
+
+```
+import { UploadRequestOption } from 'rc-upload/lib/interface';
+
+// 所以需要改写customRequest
+const customRequest = async (options: UploadRequestOption)=> {
+  const response = await fetch(options.action, {
+    headers: options.headers,
+    method: options.method,
+    body: options.file
+  });
+  options?.onSuccess?.(response);
+}
+```
+
+#### 如何在关闭 openFileDialogOnClick 情况下上传文件并监听弹窗的取消按钮
+
+```
+ <PictureCardUpload
+  openFileDialogOnClick={false}
+  id='upload-file'
+/>
+
+// 触发弹窗
+const input = document.querySelector("#upload-file") as HTMLInputElement;
+input?.click();
+
+// 监听弹窗取消按钮
+useEffect(()=>{
+  const cancelEventListener = () => setShowUpload(false);
+  document.querySelector("#upload-file")?.addEventListener("cancel", cancelEventListener)
+
+  return ()=> {
+    document.querySelector("#upload-file")?.removeEventListener("cancel", cancelEventListener)
+  }
+},[])
+
 ```

@@ -39,6 +39,7 @@ function InternalCamera(props: Props, ref: Ref<HTMLVideoElement>) {
   const { className, open, autoPlay = true, ...restProps } = props;
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
   const nextRef = (ref || videoRef) as RefObject<HTMLVideoElement>;
 
   const startCamera = useCallback(() => {
@@ -46,15 +47,34 @@ function InternalCamera(props: Props, ref: Ref<HTMLVideoElement>) {
       .getUserMedia({ video: true })
       .then((stream) => {
         nextRef.current!.srcObject = stream;
+        mediaStreamRef.current = stream;
       })
       .catch((error) => {
         console.error('Unable to get camera: ' + error);
       });
   }, []);
 
+  const stopCamera = () => {
+    if (mediaStreamRef.current) {
+      const tracks = mediaStreamRef.current.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+      mediaStreamRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      stopCamera();
+    };
+  }, []);
+
   useEffect(() => {
     if (open) {
       startCamera();
+    } else {
+      stopCamera();
     }
   }, [open]);
 

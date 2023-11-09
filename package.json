@@ -52,6 +52,7 @@
     ]
   },
   "dependencies": {
+    "antd-img-crop": "^4.15.0",
     "react-no-ssr": "^1.1.0"
   },
   "devDependencies": {
@@ -62,7 +63,6 @@
     "@types/react-no-ssr": "^1.1.5",
     "@umijs/lint": "^4.0.0",
     "antd": "^5.11.0",
-    "antd-img-crop": "^4.15.0",
     "dumi": "^2.2.13",
     "eslint": "^8.23.0",
     "father": "^4.1.0",
@@ -78,7 +78,6 @@
   },
   "peerDependencies": {
     "antd": ">5.0.0",
-    "antd-img-crop": ">=4.0.0",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   }
