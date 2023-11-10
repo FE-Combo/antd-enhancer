@@ -6,10 +6,10 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-export interface Props extends Omit<ModalProps, 'onClose'> {
+export interface Props extends Omit<ModalProps, 'onCancel'> {
   loading?: boolean;
   fixHeight?: boolean;
-  onClose: (e?: React.MouseEvent | React.KeyboardEvent) => void;
+  onCancel?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Index: FC<Props> = (props) => {
