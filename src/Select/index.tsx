@@ -3,11 +3,8 @@ import { Select, SelectProps, Typography, theme } from 'antd';
 import { DefaultOptionType } from 'antd/lib/select';
 import classNames from 'classnames';
 import { BaseSelectRef } from 'rc-select';
-import { OptionGroupFC } from 'rc-select/lib/OptGroup';
-import { OptionFC } from 'rc-select/lib/Option';
 import { BaseOptionType, FilterFunc } from 'rc-select/lib/Select';
 import React, {
-  ForwardRefExoticComponent,
   PropsWithChildren,
   ReactNode,
   Ref,
@@ -19,33 +16,23 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-export interface Props extends SelectProps {
+export interface Props<
+  V,
+  O extends BaseOptionType | DefaultOptionType = DefaultOptionType,
+> extends SelectProps<V, O> {
   highlightSearch?: boolean;
   searchLabel?: boolean;
-  tooltip?: boolean | ((option: DefaultOptionType) => ReactNode) | ReactNode;
+  tooltip?:
+    | boolean
+    | ((option: BaseOptionType | DefaultOptionType) => ReactNode)
+    | ReactNode;
   tooltipClassName?: string;
 }
 
-export type RefInternalSelect = (
-  props: React.PropsWithChildren<Props> & {
-    ref?: React.Ref<BaseSelectRef>;
-  },
-) => React.ReactElement;
-
-type Func = ForwardRefExoticComponent<
-  Props & {
-    children?: ReactNode;
-  } & React.RefAttributes<BaseSelectRef>
-> & {
-  OptGroup: OptionGroupFC;
-  Option: OptionFC;
-  SECRET_COMBOBOX_MODE_DO_NOT_USE: string;
-};
-
-function InternalSelect(
-  props: PropsWithChildren<Props>,
-  ref: Ref<BaseSelectRef>,
-) {
+function InternalSelect<
+  V,
+  O extends BaseOptionType | DefaultOptionType = DefaultOptionType,
+>(props: PropsWithChildren<Props<V, O>>, ref: Ref<BaseSelectRef>) {
   const prefixCls = 'antd-enhance-select';
   const { theme, token, hashId } = useToken();
 
@@ -193,24 +180,27 @@ function InternalSelect(
   );
 }
 
-const ForwardInternalSelect = forwardRef(InternalSelect) as RefInternalSelect;
+const ForwardInternalSelect = forwardRef(InternalSelect) as unknown as (<
+  ValueType = any,
+  OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType,
+>(
+  props: React.PropsWithChildren<SelectProps<ValueType, OptionType>> & {
+    ref?: React.Ref<BaseSelectRef>;
+  },
+) => React.ReactElement) & {
+  displayName?: string;
+  SECRET_COMBOBOX_MODE_DO_NOT_USE: string;
+  Option: typeof Select.Option;
+  OptGroup: typeof Select.OptGroup;
+};
 
-function ExternalSelect(
-  props: PropsWithChildren<Props>,
-  ref: Ref<BaseSelectRef>,
-) {
-  return <ForwardInternalSelect {...props} ref={ref} />;
-}
+ForwardInternalSelect.displayName = 'Select';
 
-const ForwardExternalSelect = forwardRef(ExternalSelect) as Func;
-
-ForwardExternalSelect.displayName = 'Select';
-
-ForwardExternalSelect.SECRET_COMBOBOX_MODE_DO_NOT_USE =
+ForwardInternalSelect.SECRET_COMBOBOX_MODE_DO_NOT_USE =
   Select.SECRET_COMBOBOX_MODE_DO_NOT_USE;
 
-ForwardExternalSelect.Option = Select.Option;
+ForwardInternalSelect.Option = Select.Option;
 
-ForwardExternalSelect.OptGroup = Select.OptGroup;
+ForwardInternalSelect.OptGroup = Select.OptGroup;
 
-export default ForwardExternalSelect;
+export default ForwardInternalSelect;

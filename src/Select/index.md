@@ -42,11 +42,11 @@ export default () => {
 
 # 基本参数
 
-| 参数             | 说明                                         | 类型     | 默认值     |
-| ---------------- | -------------------------------------------- | -------- | ---------- | ----- |
-| highlightSearch  | 搜索高亮，使用该属性必须开启 showSearch      | `bolean` | false      |
-| searchLabel      | label 搜索，若设置 filterOption 此属性将失效 | `bolean` | false      |
-| tooltip          | tooltip 提示                                 | `bolean  | ReactNode` | false |
-| tooltipClassName | tooltip 样式                                 | `string` | -          |
+| 参数             | 说明                                         | 类型                   | 默认值 |
+| ---------------- | -------------------------------------------- | ---------------------- | ------ |
+| highlightSearch  | 搜索高亮，使用该属性必须开启 showSearch      | `bolean`               | false  |
+| searchLabel      | label 搜索，若设置 filterOption 此属性将失效 | `bolean`               | false  |
+| tooltip          | tooltip 提示                                 | `bolean  \| ReactNode` | false  |
+| tooltipClassName | tooltip 样式                                 | `string`               | -      |
 
 [Select 配置参考 antd 文档](https://ant-design.antgroup.com/components/select-cn#api)
