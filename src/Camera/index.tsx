@@ -13,12 +13,19 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
+// 获取所有视频设备
+export async function getVideoDevices() {
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+  return videoDevices;
+}
+
 export interface Props
   extends React.DetailedHTMLProps<
     React.VideoHTMLAttributes<HTMLVideoElement>,
     HTMLVideoElement
   > {
-  open?: boolean;
+  open?: boolean | string;
 }
 
 export type RefInternalCamera = (
@@ -43,8 +50,14 @@ function InternalCamera(props: Props, ref: Ref<HTMLVideoElement>) {
   const nextRef = (ref || videoRef) as RefObject<HTMLVideoElement>;
 
   const startCamera = useCallback(() => {
+    const constraints =
+      typeof open === 'string'
+        ? {
+            video: { deviceId: { exact: open } },
+          }
+        : { video: open };
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia(constraints)
       .then((stream) => {
         nextRef.current!.srcObject = stream;
         mediaStreamRef.current = stream;
@@ -52,7 +65,7 @@ function InternalCamera(props: Props, ref: Ref<HTMLVideoElement>) {
       .catch((error) => {
         console.error('Unable to get camera: ' + error);
       });
-  }, []);
+  }, [open]);
 
   const stopCamera = () => {
     if (mediaStreamRef.current) {

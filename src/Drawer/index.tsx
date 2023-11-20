@@ -6,10 +6,11 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-export interface Props extends DrawerProps {
+export interface Props extends Omit<DrawerProps, 'onClose'> {
   loading?: boolean;
   onOk?: () => void;
   confirmLoading?: boolean;
+  onClose?: (e?: React.MouseEvent | React.KeyboardEvent) => void;
 }
 
 const Index: FC<Props> = (props) => {
