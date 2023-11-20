@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.2...v0.5.3) (2023-11-20)
+
+### Features
+
+- camera 支持传入设备 ID ([71e37e5](https://github.com/FE-Combo/antd-enhancer/commit/71e37e5fdc0126185b9d7b90dfea02082405996e))
+
 ### [0.5.2](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.1...v0.5.2) (2023-11-10)
 
 ### Bug Fixes
