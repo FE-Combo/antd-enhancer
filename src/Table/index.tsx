@@ -59,7 +59,7 @@ const InternalTable = <T extends AnyObject = AnyObject>(
             render(value, record, index) || defaultData;
         } else {
           item.render = (value) => {
-            if (value) {
+            if (value !== null && value !== undefined) {
               if (typeof value === 'bigint') {
                 return value.toString();
               } else {
