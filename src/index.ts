@@ -32,7 +32,10 @@ export { ErrorType as PictureCardUploadErrorType } from './PictureCardUpload';
 export type { Props as PictureCardUploadProps } from './PictureCardUpload';
 export type { Props as RouteMenuProps } from './RouteMenu';
 export type { Props as SelectProps } from './Select';
-export type { Props as TableProps } from './Table';
+export type {
+  NextColumnType as TableColumnType,
+  Props as TableProps,
+} from './Table';
 
 export { default as Actions } from './Actions';
 export { default as Camera } from './Camera';

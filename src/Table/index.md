@@ -13,6 +13,7 @@ nav:
   - 设置 `rowKey` 默认值为 index
   - 刷新表单时，当前页为空数据自动回退上一页
   - columns dataIndex 默认与 index 一致
+  - 添加 rowKey 与 columns 中 dataIndex、key 强类型校验
 - 新特性
   - 新增默认数据填充 `defaultData`
 

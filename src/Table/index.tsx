@@ -2,7 +2,11 @@ import { useStyleRegister } from '@ant-design/cssinjs';
 import { Table, Typography, theme } from 'antd';
 import { AnyObject } from 'antd/lib/_util/type';
 import { TableProps } from 'antd/lib/table';
-import { ColumnsType } from 'antd/lib/table/interface';
+import {
+  ColumnGroupType,
+  ColumnType,
+  ColumnsType,
+} from 'antd/lib/table/interface';
 import classNames from 'classnames';
 import { Reference } from 'rc-table';
 import React, {
@@ -16,8 +20,20 @@ import genDefaultStyle from './jss';
 
 const { useToken } = theme;
 
-export interface Props<T extends AnyObject = AnyObject> extends TableProps<T> {
+export interface NextColumnType<T = unknown>
+  extends Omit<
+    ColumnGroupType<T> | ColumnType<T>,
+    'key' | 'dataIndex' | 'rowKey'
+  > {
+  key?: keyof T;
+  dataIndex?: keyof T;
+  rowKey?: keyof T | ((record: T, index?: number) => keyof T);
+}
+
+export interface Props<T extends AnyObject = AnyObject>
+  extends Omit<TableProps<T>, 'columns'> {
   defaultData?: string;
+  columns?: NextColumnType<T>[];
 }
 
 export type RefInternalTable = <RecordType extends AnyObject = AnyObject>(
