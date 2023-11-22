@@ -6,6 +6,7 @@ import {
   ColumnGroupType,
   ColumnType,
   ColumnsType,
+  GetRowKey,
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
 import { Reference } from 'rc-table';
@@ -27,13 +28,13 @@ export interface NextColumnType<T = unknown>
   > {
   key?: keyof T;
   dataIndex?: keyof T;
-  rowKey?: keyof T | ((record: T, index?: number) => keyof T);
 }
 
 export interface Props<T extends AnyObject = AnyObject>
-  extends Omit<TableProps<T>, 'columns'> {
+  extends Omit<TableProps<T>, 'columns' | 'rowKey'> {
   defaultData?: string;
   columns?: NextColumnType<T>[];
+  rowKey?: keyof T | ((record: T, index?: number) => keyof T);
 }
 
 export type RefInternalTable = <RecordType extends AnyObject = AnyObject>(
@@ -124,7 +125,9 @@ const InternalTable = <T extends AnyObject = AnyObject>(
     <Table
       ref={ref}
       className={classNames(prefixCls, hashId, className)}
-      rowKey={rowKey || ((_, i) => i!.toString())}
+      rowKey={
+        (rowKey || ((_, i) => i!.toString())) as string | keyof T | GetRowKey<T>
+      }
       columns={nextColumns}
       pagination={pagination}
       {...restProps}
