@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.5](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.4...v0.5.5) (2023-11-22)
+
+### Features
+
+- enhance Table type guard ([159b25d](https://github.com/FE-Combo/antd-enhancer/commit/159b25da0f10eabe42a73e5964a4b8c41be664eb))
+
 ### [0.5.4](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.3...v0.5.4) (2023-11-21)
 
 ### Bug Fixes
