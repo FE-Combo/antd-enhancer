@@ -7,6 +7,7 @@ const genDefaultStyle = (prefixCls: string): CSSInterpolation => [
       minHeight: '100%',
       maxHeight: '100%',
       height: '100%',
+      overflowY: 'auto',
 
       '& > .ant-spin-nested-loading': {
         height: '100%',

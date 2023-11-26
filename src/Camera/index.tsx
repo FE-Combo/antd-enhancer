@@ -15,6 +15,11 @@ const { useToken } = theme;
 
 // 获取所有视频设备
 export async function getVideoDevices() {
+  if (!navigator?.mediaDevices?.enumerateDevices) {
+    throw new Error(
+      'The current browser does not support obtaining device information, more information: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia',
+    );
+  }
   const devices = await navigator.mediaDevices.enumerateDevices();
   const videoDevices = devices.filter((device) => device.kind === 'videoinput');
   return videoDevices;
