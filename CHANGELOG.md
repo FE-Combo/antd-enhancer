@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.7](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.6...v0.5.7) (2023-11-26)
+
+### Bug Fixes
+
+- bug ([9d7bfc8](https://github.com/FE-Combo/antd-enhancer/commit/9d7bfc8730b6eebd3dbacbb92187f737c835d503))
+
 ### [0.5.6](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.5...v0.5.6) (2023-11-22)
 
 ### Bug Fixes
