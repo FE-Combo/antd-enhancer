@@ -184,7 +184,7 @@ const ForwardInternalSelect = forwardRef(InternalSelect) as unknown as (<
   ValueType = any,
   OptionType extends BaseOptionType | DefaultOptionType = DefaultOptionType,
 >(
-  props: React.PropsWithChildren<SelectProps<ValueType, OptionType>> & {
+  props: React.PropsWithChildren<Props<ValueType, OptionType>> & {
     ref?: React.Ref<BaseSelectRef>;
   },
 ) => React.ReactElement) & {
