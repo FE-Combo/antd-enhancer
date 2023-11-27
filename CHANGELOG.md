@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.8](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.7...v0.5.8) (2023-11-27)
+
+### Bug Fixes
+
+- select component props type ([ff16fe4](https://github.com/FE-Combo/antd-enhancer/commit/ff16fe41fe6624ee6939ecb389f2d1d9adde4ddf))
+
 ### [0.5.7](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.6...v0.5.7) (2023-11-26)
 
 ### Bug Fixes
