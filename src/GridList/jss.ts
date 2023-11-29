@@ -11,6 +11,7 @@ const genDefaultStyle = (
       gridGap: `${token.margin}px ${token.marginSM}px`,
     },
     [`.${prefixCls}-pagination`]: {
+      marginTop: token.margin,
       textAlign: 'right',
     },
   },
