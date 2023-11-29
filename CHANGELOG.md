@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.9](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.8...v0.5.9) (2023-11-29)
+
+### Bug Fixes
+
+- fix GridList style ([a410a29](https://github.com/FE-Combo/antd-enhancer/commit/a410a2972ebba48402e7eae87d65194b96f6e942))
+
 ### [0.5.8](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.7...v0.5.8) (2023-11-27)
 
 ### Bug Fixes
