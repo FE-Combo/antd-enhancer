@@ -50,3 +50,5 @@ export default () => {
 | tooltipClassName | tooltip 样式                                 | `string`               | -      |
 
 [Select 配置参考 antd 文档](https://ant-design.antgroup.com/components/select-cn#api)
+
+TODO: searchLabel 使用 optionFilterProp = 'label' 代替

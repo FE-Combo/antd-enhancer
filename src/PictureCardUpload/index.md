@@ -22,7 +22,7 @@ group:
 
 ```jsx
 import React, { useState } from 'react';
-import { PictureCardUpload } from 'antd-enhancer';
+import { PictureCardUpload, PictureCardUploadErrorType } from 'antd-enhancer';
 import { Form, Button, Typography } from 'antd';
 import { UploadFile } from 'antd/lib/upload';
 
@@ -209,3 +209,13 @@ useEffect(()=>{
 },[])
 
 ```
+
+#### 上传文件过程中跳转到其他页面，如何保持上传进度？
+
+上传文件过程中挂载当前进度不会中断上传进度，依然会触发回调函数。但是如果页面刷新或者跳转到其他页面，上传进度会丢失，因为浏览器会终止当前页面的所有网络请求。
+
+## TODO
+
+使用通配符匹配文件类型，e.g. image/_, application/_, audio/_, video/_
+
+actions 请求异常时无法被捕获
