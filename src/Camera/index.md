@@ -89,3 +89,7 @@ export default () => {
 | open      | 是否开启摄像头或摄像头对应设备 id | boolean \| string | -      |
 
 更多 Props 请参考：[VideoHTMLAttributes](https://use-form.netlify.app/interfaces/_node_modules__types_react_index_d_.react.mediahtmlattributes)
+
+# Attentions
+
+获取摄像头功能仅在 HTTPS 中使用，若需要在 HTTP 中使用，需要将（不安全）来源配置为安全来源。`chrome://flags/#unsafely-treat-insecure-origin-as-secure`

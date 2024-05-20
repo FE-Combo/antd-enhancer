@@ -55,21 +55,30 @@ function InternalCamera(props: Props, ref: Ref<HTMLVideoElement>) {
   const nextRef = (ref || videoRef) as RefObject<HTMLVideoElement>;
 
   const startCamera = useCallback(() => {
-    const constraints =
-      typeof open === 'string'
-        ? {
-            video: { deviceId: { exact: open } },
-          }
-        : { video: open };
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        nextRef.current!.srcObject = stream;
-        mediaStreamRef.current = stream;
-      })
-      .catch((error) => {
-        console.error('Unable to get camera: ' + error);
-      });
+    try {
+      const constraints =
+        typeof open === 'string'
+          ? {
+              video: { deviceId: { exact: open } },
+            }
+          : { video: open };
+      if (!navigator?.mediaDevices?.getUserMedia) {
+        throw new Error(
+          'getUserMedia() is not supported in your browser, more information: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia',
+        );
+      }
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then((stream) => {
+          nextRef.current!.srcObject = stream;
+          mediaStreamRef.current = stream;
+        })
+        .catch((error) => {
+          console.error('Unable to get camera: ' + error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   }, [open]);
 
   const stopCamera = () => {
