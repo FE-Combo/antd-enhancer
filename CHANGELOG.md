@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.10](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.9...v0.5.10) (2024-05-20)
+
+### Bug Fixes
+
+- camera component ([9ba5d09](https://github.com/FE-Combo/antd-enhancer/commit/9ba5d0969713607c7011e90032986749336e0dc0))
+
 ### [0.5.9](https://github.com/FE-Combo/antd-enhancer/compare/v0.5.8...v0.5.9) (2023-11-29)
 
 ### Bug Fixes
